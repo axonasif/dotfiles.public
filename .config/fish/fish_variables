@@ -3,7 +3,6 @@
 SETUVAR __fish_initialized:3400
 SETUVAR _fish_abbr_b:cd\x20\x2e\x2e
 SETUVAR _fish_abbr_bb:bashbox\x20build\x20\x2d\x2drelease
-SETUVAR _fish_abbr_cd:z
 SETUVAR _fish_abbr_f:fg
 SETUVAR _fish_abbr_ga:git\x20add
 SETUVAR _fish_abbr_gc:git\x20commit\x20\x2dm
@@ -12,9 +11,6 @@ SETUVAR _fish_abbr_gd:git\x20diff
 SETUVAR _fish_abbr_gpp:git\x20pull\x20\x26\x26\x20git\x20push
 SETUVAR _fish_abbr_gs:git\x20status
 SETUVAR _fish_abbr_k:kill
-SETUVAR _fish_abbr_la:exa\x20\x2dla
-SETUVAR _fish_abbr_ll:exa\x20\x2dlh
-SETUVAR _fish_abbr_ls:exa
 SETUVAR _fish_abbr_n:nvim
 SETUVAR _fish_abbr_s:sleep
 SETUVAR fish_color_autosuggestion:586e75
