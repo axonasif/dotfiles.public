@@ -1,6 +1,5 @@
 [credential]
-	helper = !/opt/homebrew/bin/gh auth git-credential
-	helper = !/usr/bin/gh auth git-credential
+	helper = !/usr/bin/env gh auth git-credential
 	helper = !/usr/bin/gp credential-helper
 [user]
 	name = AXON
