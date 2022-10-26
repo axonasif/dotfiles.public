@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+
+
+### DEPRECEATED
+
+
 ## Init status draw
 printf '\n';
 set -eu
