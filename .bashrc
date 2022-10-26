@@ -14,7 +14,6 @@ export EDITOR=nvim;
 # Disable nullglob
 shopt -s nullglob
 
-for script in "$HOME/.bashrc.d"/*; do {
+for script in "$HOME/.shellrc.d"/*; do {
   source "$script";
 } done
-source "/Users/axon/.bashbox/env";

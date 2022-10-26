@@ -1,8 +1,2 @@
-/.bashrc
-/.bashrc.d
-/.profile
 /.private
-#/.gitconfig
 /.old
-/.gitpod*
-/README.md
