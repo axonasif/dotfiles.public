@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if test -z "${NIX_PROFILES:-}"; then {
+# if test -z "${NIX_PROFILES:-}"; then {
 
   for target in "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh" \
                 "$HOME/.nix-profile/etc/profile.d/nix.sh"; do {
@@ -13,6 +13,6 @@ if test -z "${NIX_PROFILES:-}"; then {
 
   unset target;
 
-} fi
+# } fi
 
 
