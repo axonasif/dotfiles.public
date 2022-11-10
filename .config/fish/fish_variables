@@ -12,6 +12,7 @@ SETUVAR _fish_abbr_gpp:git\x20pull\x20\x26\x26\x20git\x20push
 SETUVAR _fish_abbr_gs:git\x20status
 SETUVAR _fish_abbr_k:kill
 SETUVAR _fish_abbr_n:nvim
+SETUVAR _fish_abbr_nvim:lvim
 SETUVAR _fish_abbr_s:sleep
 SETUVAR _fish_abbr_tree:exa\x20\x2d\x2dtree
 SETUVAR _fisher_jorgebucaran_2F_fisher_files:\x7e/\x2econfig/fish/functions/fisher\x2efish\x1e\x7e/\x2econfig/fish/completions/fisher\x2efish
