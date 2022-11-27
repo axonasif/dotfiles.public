@@ -1,5 +1,0 @@
-[credential]
-	helper = !/usr/bin/env gh auth git-credential
-[user]
-	name = AXON
-	email = axonasif@gmail.com
