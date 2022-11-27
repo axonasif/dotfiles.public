@@ -2,16 +2,16 @@
 
 # if test -z "${NIX_PROFILES:-}"; then {
 
-  for target in "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh" \
-                "$HOME/.nix-profile/etc/profile.d/nix.sh"; do {
+for target in "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh" \
+              "$HOME/.nix-profile/etc/profile.d/nix.sh"; do {
 
-    if test -e "$target"; then {
-      . "$target" && break;
-    } fi
+  if test -e "$target"; then {
+    . "$target" && break;
+  } fi
 
-  } done
+} done
 
-  unset target;
+unset target;
 
 # } fi
 
