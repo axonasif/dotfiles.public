@@ -6,7 +6,7 @@ Even if you have an existing dotfiles repo, this repo here could give you an bas
 
 # Special files
 
-## `.dotfiles`
+## [.dotfiles](./.dotfiles)
 
 #### Ignore symlinking specific files
 
@@ -33,7 +33,7 @@ ignore=(
 
 #### Alternative filetree root
 
-Let's say you have your raw dotfiles in a directory called `dots`, put the following in [.dotfiles](./dotfiles) to indicate that:
+Let's say you have your raw dotfiles in a directory called `dots`, put the following in [.dotfiles](./.dotfiles) to indicate that:
 
 ```bash
 roots=(
