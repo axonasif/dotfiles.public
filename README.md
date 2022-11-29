@@ -6,15 +6,15 @@ Even if you have an existing dotfiles repo, this repo here could give you an bas
 
 # Special files
 
-## `.dotfiles`
+## [.dotfiles](./.dotfiles)
 
 #### Ignore symlinking specific files
 
-You can tell `dotsh` to ignore symlinking specific files by putting their relative path to an array called `ignore` on `.dotfiles` config file.
+You can tell `dotsh` to ignore symlinking specific files by putting their relative path to an array called `ignore` on [.dotfiles](./.dotfiles) config file.
 
 This can be helpful when you just want to keep some files inside your dotfiles repo but don't want to install them as symlinks.
 
-For example, if you want to ignore `.bash_profile` and `.npmrc` file, you could put the following in [.dotfiles](./dotfiles):
+For example, if you want to ignore `.bash_profile` and `.npmrc` file, you could put the following in [.dotfiles](./.dotfiles):
 
 ```bash
 ignore=(
@@ -33,7 +33,7 @@ ignore=(
 
 #### Alternative filetree root
 
-Let's say you have your raw dotfiles in a directory called `dots`, put the following in [.dotfiles](./dotfiles) to indicate that:
+Let's say you have your raw dotfiles in a directory called `dots`, put the following in [.dotfiles](./.dotfiles) to indicate that:
 
 ```bash
 roots=(
