@@ -50,15 +50,6 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 
 -- Use which-key to add extra bindings with the leader-key prefix
 -- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
-lvim.builtin.which_key.mappings["t"] = {
-  name = "+Trouble",
-  r = { "<cmd>Trouble lsp_references<cr>", "References" },
-  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-  d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
-  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
-  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-  w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
-}
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
@@ -186,9 +177,6 @@ lvim.builtin.treesitter.highlight.enable = true
 --   end,
 -- })
 
-
-
-
 lvim.plugins = {
   {
     "kylechui/nvim-surround",
@@ -289,16 +277,16 @@ pcall(function()
         use_telescope = true,
       },
       inlay_hints = {
-        auto = false,
-        -- only_current_line = false,
-        -- show_parameter_hints = false,
-        -- parameter_hints_prefix = "<-",
-        -- other_hints_prefix = "=>",
-        -- max_len_align = false,
-        -- max_len_align_padding = 1,
-        -- right_align = false,
-        -- right_align_padding = 7,
-        -- highlight = "Comment",
+        auto = true,
+        only_current_line = false,
+        show_parameter_hints = false,
+        parameter_hints_prefix = "<-",
+        other_hints_prefix = "=>",
+        max_len_align = false,
+        max_len_align_padding = 1,
+        right_align = false,
+        right_align_padding = 7,
+        highlight = "Comment",
       },
       hover_actions = {
         border = "rounded",
@@ -310,7 +298,8 @@ pcall(function()
             local _, _ = pcall(vim.lsp.codelens.refresh)
           end,
         })
-        inlay_hints_module.set_all()
+        -- inlay-hints
+        -- inlay_hints_module.set_all()
       end,
     },
     dap = {
@@ -322,25 +311,8 @@ pcall(function()
         local rt = require "rust-tools"
         vim.keymap.set("n", "K", rt.hover_actions.hover_actions, { buffer = bufnr })
 
-        -- rust specific whichkey bindings
-        lvim.builtin.which_key.mappings["R"] = {
-          name = "Rust",
-          r = { "<cmd>RustRunnables<Cr>", "Runnables" },
-          t = { "<cmd>lua _CARGO_TEST()<cr>", "Cargo Test" },
-          m = { "<cmd>RustExpandMacro<Cr>", "Expand Macro" },
-          c = { "<cmd>RustOpenCargo<Cr>", "Open Cargo" },
-          p = { "<cmd>RustParentModule<Cr>", "Parent Module" },
-          d = { "<cmd>RustDebuggables<Cr>", "Debuggables" },
-          v = { "<cmd>RustViewCrateGraph<Cr>", "View Crate Graph" },
-          R = {
-            "<cmd>lua require('rust-tools/workspace_refresh')._reload_workspace_from_cargo_toml()<Cr>",
-            "Reload Workspace",
-          },
-          o = { "<cmd>RustOpenExternalDocs<Cr>", "Open External Docs" },
-        }
-
         -- inlay-hints
-        inlay_hints_module.on_attach(client, bufnr)
+        -- inlay_hints_module.on_attach(client, bufnr)
       end,
 
       capabilities = require("lvim.lsp").common_capabilities(),
@@ -377,7 +349,6 @@ lvim.builtin.dap.on_config_done = function(dap)
 end
 
 
-lvim.builtin.which_key.mappings["l"].w = { "<cmd>Trouble<Cr>", "Trouble" }
 -------
 -- Rust
 -------
@@ -432,20 +403,6 @@ lsp_manager.setup("gopls", {
       vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc, buffer = bufnr, noremap = true })
     end
 
-    -- whichkey bindings
-    lvim.builtin.which_key.mappings["G"] = {
-      name = "Golang",
-      r = { "<cmd>RustRunnables<Cr>", "Runnables" },
-      i = { "<cmd>GoInstallDeps<Cr>", "Install Go Dependencies" },
-      m = { "<cmd>GoMod tidy<cr>", "Tidy" },
-      t = { "<cmd>GoTestAdd<Cr>", "Add Test" },
-      ta = { "<cmd>GoTestsAll<Cr>", "Add All Tests" },
-      tx = { "<cmd>GoTestsExp<Cr>", "Add Exported Tests" },
-      gg = { "<cmd>GoGenerate<Cr>", "Go Generate" },
-      gf = { "<cmd>GoGenerate %<Cr>", "Go Generate File" },
-      gc = { "<cmd>GoCmt<Cr>", "Generate Comment" },
-      gd = { "<cmd>lua require('dap-go').debug_test()<cr>", "Debug Test" },
-    }
 
     -- inlay-hints
     inlay_hints_module.on_attach(client, bufnr)
@@ -494,3 +451,49 @@ gopher.setup {
 
 vim.opt.clipboard = ""
 -- vim.opt.relativenumber = true
+
+---
+-- whichkey bindings
+---
+lvim.builtin.which_key.mappings["l"].w = { "<cmd>Trouble<Cr>", "Trouble" }
+lvim.builtin.which_key.mappings["t"] = {
+  name = "+Trouble",
+  r = { "<cmd>Trouble lsp_references<cr>", "References" },
+  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+  d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
+  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+  w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
+}
+-- golang
+lvim.builtin.which_key.mappings["G"] = {
+  name = "Golang",
+  i = { "<cmd>GoInstallDeps<Cr>", "Install Go Dependencies" },
+  m = { "<cmd>GoMod tidy<cr>", "Tidy" },
+  t = { "<cmd>GoTestAdd<Cr>", "Add Test" },
+  ta = { "<cmd>GoTestsAll<Cr>", "Add All Tests" },
+  tx = { "<cmd>GoTestsExp<Cr>", "Add Exported Tests" },
+  gg = { "<cmd>GoGenerate<Cr>", "Go Generate" },
+  gf = { "<cmd>GoGenerate %<Cr>", "Go Generate File" },
+  gc = { "<cmd>GoCmt<Cr>", "Generate Comment" },
+  gd = { "<cmd>lua require('dap-go').debug_test()<cr>", "Debug Test" },
+}
+-- rust specific whichkey bindings
+lvim.builtin.which_key.mappings["R"] = {
+  name = "Rust",
+  r = { "<cmd>RustRunnables<Cr>", "Runnables" },
+  t = { "<cmd>lua _CARGO_TEST()<cr>", "Cargo Test" },
+  m = { "<cmd>RustExpandMacro<Cr>", "Expand Macro" },
+  c = { "<cmd>RustOpenCargo<Cr>", "Open Cargo" },
+  p = { "<cmd>RustParentModule<Cr>", "Parent Module" },
+  d = { "<cmd>RustDebuggables<Cr>", "Debuggables" },
+  v = { "<cmd>RustViewCrateGraph<Cr>", "View Crate Graph" },
+  R = {
+    "<cmd>lua require('rust-tools/workspace_refresh')._reload_workspace_from_cargo_toml()<Cr>",
+    "Reload Workspace",
+  },
+  o = { "<cmd>RustOpenExternalDocs<Cr>", "Open External Docs" },
+}
+-- bufferline
+lvim.builtin.which_key.mappings["j"] =  { "<cmd>BufferLinePick<cr>", "Jump" }
+

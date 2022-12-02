@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -eu;
+local_bin_dir="$HOME/.local/bin";
+
+if test ! -e "$local_bin_dir"; then {
+  mkdir -p "$local_bin_dir";
+} fi
+
+if ! printf '%s\n' "$PATH" | grep -q "$local_bin_dir"; then {
+  printf 'warn: %s\n' "$local_bin_dir is not in your PATH";
+} fi
+
+printf 'info: Enter "n" if you want to skip any linkage\n';
+links="$(readlink "$local_bin_dir"/* || :)";
+for bin in /Applications/*/Contents/MacOS/*; do {
+  if file "$bin" | grep -q 'executable' && [[ ! "$links" =~ "$bin" ]]; then {
+    app_name="${bin#/*/}" && app_name="${app_name%%/*}";
+    filename="${bin##*/}";
+    formatted_filename="${filename,,}" && formatted_filename="${formatted_filename// /_}";
+
+    read -rp "($app_name)>> Define target bin name (Default: $formatted_filename): " target_filename;
+    if test "$target_filename" == "n"; then {
+      printf 'info: %s\n' "$filename skipped";
+      continue;
+    } fi
+    target_filename="${target_filename:-"$formatted_filename"}";
+    ln -sf "$bin" "$local_bin_dir/$target_filename";
+    printf 'info: %s\n' "Linked $filename as $target_filename under \$HOME/.local/bin";
+  } fi
+} done || printf 'error: %s\n' "No MacOS exec binaries found within your Applications";

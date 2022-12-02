@@ -1,7 +1,6 @@
 # This is a demo config to bring across some of the most important commands more easily.
 # For a more advanced configuration example see https://github.com/FelixKratz/SketchyBar/discussions/47#discussion-3587958
 _sketchybar_plugdir="$HOME/.config/sketchybar/plugins";
-_break_rem_file=/tmp/.first_break_rem;
 ############## BAR ############## 
 sketchybar  --bar height=25        \
                     blur_radius=50   \
@@ -134,11 +133,10 @@ sketchybar --add item topproc right                                             
 
 ###################### Background non-ui scripts ################
 # TakeABreak Reminder
-#if test -z "$SDEBUG"; then {
-
-#	sketchybar  --add item break_reminder \
- #       	      --set break_reminder script="test ! -e $_break_rem_file && touch $_break_rem_file || pmset displaysleepnow" update_freq=1500
-#} fi
+sketchybar  --add item break_reminder \
+            --set break_reminder \
+            script="$_sketchybar_plugdir/block.sh" \
+            update_freq=1500
 
 ############## FINALIZING THE SETUP ##############
 sketchybar  --update
