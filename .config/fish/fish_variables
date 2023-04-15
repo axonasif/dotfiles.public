@@ -12,7 +12,7 @@ SETUVAR _fish_abbr_gpp:git\x20pull\x20\x26\x26\x20git\x20push
 SETUVAR _fish_abbr_gs:git\x20status
 SETUVAR _fish_abbr_k:kill
 SETUVAR _fish_abbr_n:nvim
-SETUVAR _fish_abbr_nvim:lvim
+SETUVAR _fish_abbr_nvim:nvim
 SETUVAR _fish_abbr_s:sleep
 SETUVAR _fish_abbr_tree:exa\x20\x2d\x2dtree
 SETUVAR _fisher_axonasif_2F_bashenv_2E_fish_files:\x7e/\x2econfig/fish/conf\x2ed/bashenv\x2efish
