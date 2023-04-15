@@ -55,8 +55,6 @@ require("telescope").setup({
   },
 })
 
-require('telescope').load_extension('fzf')
-
 function FuzzyFindFiles()
   require('telescope.builtin').grep_string({
     path_display = { 'smart' },
