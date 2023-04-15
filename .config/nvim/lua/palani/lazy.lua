@@ -20,11 +20,6 @@ require("lazy").setup({
 
   -- telescope plugins
   'nvim-telescope/telescope.nvim',
-  {
-    'nvim-telescope/telescope-fzf-native.nvim',
-    build =
-    'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
-  },
 
   -- window navigation
   'christoomey/vim-tmux-navigator',
