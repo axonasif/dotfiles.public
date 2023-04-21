@@ -1,3 +1,4 @@
+ln -s ~/Documents/work/dotfiles.public/.zshrc /Users/palanikannan/.zshrc
 export ZSH="$HOME/.oh-my-zsh"
 
 #zsh theme
