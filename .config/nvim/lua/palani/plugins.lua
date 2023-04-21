@@ -26,12 +26,12 @@ require("lazy").setup({
   'christoomey/vim-tmux-navigator',
 
   -- comments in nvim
-      {
-        'numToStr/Comment.nvim',
-        config = function()
-          require('Comment').setup()
-        end
-      },
+  {
+    'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup()
+    end
+  },
 
   'JoosepAlviste/nvim-ts-context-commentstring',
 
@@ -51,7 +51,7 @@ require("lazy").setup({
   },
 
   -- lazy git floating window
-  'kdheepak/lazygit.nvim',
+  'voldikss/vim-floaterm',
 
   -- lsp
   {

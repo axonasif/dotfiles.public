@@ -11,7 +11,6 @@
   "fzf-lua": { "branch": "main", "commit": "08f57e9a3c58c4ebef4c96de271d674d12e77607" },
   "harpoon": { "branch": "master", "commit": "f7040fd0c44e7a4010369136547de5604b9c22a1" },
   "lazy.nvim": { "branch": "main", "commit": "5f13f69851d2b244891d77590db9e3370197facc" },
-  "lazygit.nvim": { "branch": "main", "commit": "32bffdebe273e571588f25c8a708ca7297928617" },
   "lsp-zero.nvim": { "branch": "v2.x", "commit": "eb9e20ca147a31c03fd8a84e1aa2480d6100ad8a" },
   "mason-lspconfig.nvim": { "branch": "main", "commit": "6c8f7afd6162fa27719f9da9792e4314da41c501" },
   "mason.nvim": { "branch": "main", "commit": "0184cf4b6d009623d8610cae956c44471e68250d" },
@@ -22,5 +21,6 @@
   "nvim-ts-context-commentstring": { "branch": "main", "commit": "ada15e97d7d48b409f8b135ced104e00e8479fb9" },
   "nvim-web-devicons": { "branch": "master", "commit": "4ec26d67d419c12a4abaea02f1b6c57b40c08d7e" },
   "plenary.nvim": { "branch": "master", "commit": "9ac3e9541bbabd9d73663d757e4fe48a675bb054" },
+  "vim-floaterm": { "branch": "master", "commit": "ff6a8719baf17ab79df730b7ee9227444ee6a088" },
   "vim-tmux-navigator": { "branch": "master", "commit": "cdd66d6a37d991bba7997d593586fc51a5b37aa8" }
 }
