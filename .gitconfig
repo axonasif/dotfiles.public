@@ -1,0 +1,29 @@
+; ln -s ~/Documents/work/dotfiles.public/.gitconfig ~/.gitconfig
+[user]
+	email = 73993394+Palanikannan1437@users.noreply.github.com
+	name = Palanikannan1437
+	signingkey = 1F7AB197132E0352FA1DD337B1171D44AF67C27B
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[commit]
+	gpgsign = true
+[gpg]
+	program = /usr/local/bin/gpg
+
+[core]
+    pager = delta
+
+[delta]
+    navigate = true    # use n and N to move between diff sections
+    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+    side-by-side = true
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
+
