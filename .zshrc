@@ -17,6 +17,8 @@ source $ZSH/oh-my-zsh.sh
 bindkey "$terminfo[kcuu1]" history-substring-search-up
 bindkey "$terminfo[kcud1]" history-substring-search-down
 
+bindkey -s ^f "tmux-sessionizer\n"
+
 #alias for vim
 alias vi="nvim"
 alias vim="nvim"
@@ -26,8 +28,8 @@ alias vimdiff="nvim -d"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-export FZF_DEFAULT_COMMAND="fd . $HOME/Documents/work"
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+export FZF_DEFAULT_COMMAND="fd . $HOME/Documents/work\n"
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse-list --border'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export GPG_TTY=$(tty)
