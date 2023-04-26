@@ -53,6 +53,9 @@ require("lazy").setup({
   -- lazy git floating window
   'voldikss/vim-floaterm',
 
+  -- surround
+  'tpope/vim-surround',
+
   -- lsp
   {
     'VonHeikemen/lsp-zero.nvim',
