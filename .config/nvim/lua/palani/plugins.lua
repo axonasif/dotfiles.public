@@ -14,6 +14,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+  -- dependencies
   'nvim-lua/plenary.nvim',
 
   -- icons
@@ -55,6 +56,9 @@ require("lazy").setup({
 
   -- surround
   'tpope/vim-surround',
+
+  -- nvim colors
+  "norcalli/nvim-colorizer.lua",
 
   -- lsp
   {

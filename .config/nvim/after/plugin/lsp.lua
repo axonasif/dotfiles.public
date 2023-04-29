@@ -1,4 +1,3 @@
-local options = { noremap = true, silent = true }
 local luasnip = require 'luasnip'
 local cmp = require('cmp')
 local lsp = require('lsp-zero').preset({
@@ -8,7 +7,15 @@ local lsp = require('lsp-zero').preset({
   suggest_lsp_servers = true,
 })
 
-local cmp_select = { behavior = cmp.SelectBehavior.Select }
+require('luasnip.loaders.from_vscode').lazy_load()
+
+cmp.setup({
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  },
+})
+
 local cmp_mappings = lsp.defaults.cmp_mappings({
   ['<C-p>'] = cmp.mapping.select_prev_item(),
   ['<C-n>'] = function(fallback)
@@ -28,10 +35,6 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
   ['<Tab>'] = cmp.config.disable
 })
 
-lsp.setup_nvim_cmp({
-  mapping = cmp_mappings
-})
-
 lsp.set_preferences({
   suggest_lsp_servers = true,
   sign_icons = {
@@ -47,6 +50,10 @@ vim.diagnostic.config({
   globals = { "vim" },
 })
 
+lsp.setup_nvim_cmp({
+  mapping = cmp_mappings
+})
+
 lsp.on_attach(function(client, bufnr)
   local options = { buffer = bufnr, remap = false }
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, options)
@@ -55,7 +62,7 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set('n', '<leader>vd', vim.diagnostic.open_float, options)
   vim.keymap.set('n', '[d', vim.diagnostic.goto_next, options)
   vim.keymap.set('n', ']d', vim.diagnostic.goto_prev, options)
-  vim.keymap.set('n', '<leader>vca', vim.lsp.buf.code_action, options)
+  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, options)
   vim.keymap.set('n', '<leader>vrr', vim.lsp.buf.references, options)
   vim.keymap.set('n', '<leader>vrn', vim.lsp.buf.rename, options)
 
