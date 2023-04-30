@@ -1,25 +1,30 @@
 #!/usr/bin/env bash
 
-# ln -s ~/Documents/work/dotfiles.public/.tmux/tmux-sessionizer /usr/local/bin/tmux-sessionizer
-if [[ $# -eq 1 ]]; then
-    selected=$1
- else
-    selected=$(find ~/Documents/work -mindepth 1 -maxdepth 1 -type d | fzf)
+# Check if fzf is installed
+if ! command -v fzf &> /dev/null; then
+    echo "Error: fzf not found. Please install fzf." >&2
+    exit 1
 fi
 
+# Find the selected directory
+if [[ $# -eq 1 ]]; then
+    selected=$1
+else
+    selected=$(command find ~/Documents/work -mindepth 1 -maxdepth 1 -type d | command fzf)
+fi
+
+# Exit if no directory is selected
 if [[ -z $selected ]]; then
     exit 0
 fi
 
 selected_name=$(basename "$selected" | tr . _)
-tmux_running=$(pgrep tmux)
-
 # 1. First you check if a tmux session exists with a given name.
 tmux has-session -t=$selected_name 2> /dev/null
 
 # 2. Create the session if it doesn't exists.
 if [[ $? -ne 0 ]]; then
-  TMUX='' tmux new-session -d -s "$selected_name" -c "$selected"
+  TMUX='' tmux new-session -d -s "$selected_name" -c "$selected" "exec nvim ."
 fi
 
 # 3. Attach if outside of tmux, switch if you're in tmux.
