@@ -1,0 +1,18 @@
+import:
+  - ~/.config/alacritty/catppuccin/catppuccin-mocha.yml
+
+live_config_reload: true
+
+window:
+  opacity: 0.9
+  padding: 
+    y: 18
+    x: 16
+  dynamic_padding: false
+  decorations: buttonless
+
+font:
+  normal:
+    family: "SFMono Nerd Font"
+    style:  Regular 
+  size: 14.0

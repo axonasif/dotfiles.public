@@ -1,4 +1,4 @@
-This repo can serve as an example raw dotfiles filetree for use with https://github.com/axonasif/dotsh
+This repo can serve as an example raw dotfiles filetree for use with https://github.com/Palanikannan1437/dotsh
 
 You can put files directly from your `$HOME` directory (AKA `~/`) for use with `dotsh`.
 

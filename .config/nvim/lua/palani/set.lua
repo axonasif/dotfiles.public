@@ -23,6 +23,9 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.writebackup = false
 
+-- vim.opt.undofile = true
+-- vim.opt.undodir = os.getenv("HOME") .. "/.undodir"
+
 -- Always show the signcolumn, otherwise it would shift the text each time
 -- diagnostics appear/become resolved.
 vim.opt.signcolumn = "yes"

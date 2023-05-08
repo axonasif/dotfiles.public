@@ -27,6 +27,13 @@ nnoremap("<C-Down>", ":resize +3<CR>")
 nnoremap("<C-d>", "<C-d>zz")
 nnoremap("<C-u>", "<C-u>zz")
 
+-- pasting on nw line
+nnoremap("<C-p>", "<cmd>pu<CR>")
+
+-- add a new line without entering insert mode
+nnoremap("<leader>o", "mOo<Esc>`O")
+nnoremap("<leader>O", "moO<Esc>`o")
+
 --navigating while searching
 nnoremap("n", "nzzzv")
 nnoremap("N", "Nzzzv")

@@ -37,10 +37,10 @@ require("lazy").setup({
   'JoosepAlviste/nvim-ts-context-commentstring',
 
   -- AI Autocompletion
-  'Exafunction/codeium.vim',
+  -- 'Exafunction/codeium.vim',
 
-  -- color theme
-  'marko-cerovac/material.nvim',
+  -- -- color theme
+  -- 'marko-cerovac/material.nvim',
 
   -- harpooooon for quick file switching
   'ThePrimeagen/harpoon',
@@ -59,6 +59,14 @@ require("lazy").setup({
 
   -- nvim colors
   "norcalli/nvim-colorizer.lua",
+
+  -- undotree
+  "mbbill/undotree",
+
+  -- getting cocunutieeee smoooth
+  'ThePrimeagen/vim-be-good',
+
+  { "catppuccin/nvim", name = "catppuccin" },
 
   -- lsp
   {
