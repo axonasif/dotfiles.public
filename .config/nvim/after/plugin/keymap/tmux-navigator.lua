@@ -1,4 +1,3 @@
-
 local nnoremap = require("palani.keymap").nnoremap
 
 local silent = { silent = true }

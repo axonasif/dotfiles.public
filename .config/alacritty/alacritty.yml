@@ -5,11 +5,6 @@ live_config_reload: true
 
 window:
   opacity: 0.9
-  padding: 
-    y: 18
-    x: 16
-  dynamic_padding: false
-  decorations: buttonless
 
 font:
   normal:
@@ -22,6 +17,7 @@ key_bindings:
  - { key: R, mods: Command, chars: "\x01\x72" }
  - { key: Minus, mods: Command, chars: "\x01\x2d"}
  - { key: Backslash, mods: Command, chars: "\x01\x7c" }
+ - { key: G, mods: Command, chars: "\x01\x07"} # lazygit
  - { key: M, mods: Command, chars: "\x01\x6d"}
  - { key: F, mods: Command, chars: "\x01\x06"}
  - { key: D, mods: Command, chars: "\x01\x64"}

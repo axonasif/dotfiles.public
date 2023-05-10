@@ -13,7 +13,7 @@ vim.opt.textwidth=80
 
 vim.opt.timeoutlen=1000
 vim.opt.ttimeoutlen=0
-vim.opt.synmaxcol=120
+vim.opt.synmaxcol=200
 
 vim.opt.smartindent = true
 
