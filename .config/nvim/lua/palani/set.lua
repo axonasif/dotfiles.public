@@ -17,6 +17,12 @@ vim.opt.synmaxcol=200
 
 vim.opt.smartindent = true
 
+-- common status lines across buffer
+vim.opt.laststatus=3
+
+-- decent crisp seperator
+vim.cmd('highlight WinSeparator guibg=None')
+
 vim.opt.wrap = false
 
 vim.opt.swapfile = false

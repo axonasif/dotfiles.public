@@ -5,6 +5,9 @@ live_config_reload: true
 
 window:
   opacity: 0.9
+  dimensions:
+   columns: 180
+   lines: 100
 
 font:
   normal:
@@ -35,3 +38,11 @@ key_bindings:
  - { key: Key8, mods: Command, chars: "\x018" } #                ... 8
  - { key: Key9, mods: Command, chars: "\x019" } #                ... 9
  - { key: W, mods: Command, chars: "\x01x" } # kill the current pane
+
+shell:
+  program: /bin/zsh
+  args:
+    - -l
+    - -c
+    - "tmux attach || tmux; exec zsh"
+

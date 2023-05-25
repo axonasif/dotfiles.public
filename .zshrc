@@ -1,5 +1,8 @@
-# ln -s ~/Documents/work/dotfiles.public/.zshrc /Users/palanikannan/.zshrc
+# linkage --> ln -s ~/Documents/work/dotfiles.public/.zshrc /Users/palanikannan/.zshrc
 export ZSH="$HOME/.oh-my-zsh"
+
+# tmux-sessionizer
+bindkey -s ^f "tmux-sessionizer\n"
 
 #oh-my-zsh plugins
 plugins=(
@@ -10,14 +13,12 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-eval "$(starship init zsh)"
-
 # history-substring-search options
 bindkey "$terminfo[kcuu1]" history-substring-search-up
 bindkey "$terminfo[kcud1]" history-substring-search-down
 
-# tmux-sessionizer
-bindkey -s ^f "tmux-sessionizer\n"
+# pretty prompt
+eval "$(starship init zsh)"
 
 #alias for vim
 alias vi="nvim"

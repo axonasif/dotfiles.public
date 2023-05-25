@@ -23,7 +23,7 @@ nnoremap("<C-Right>", ":vertical resize +3<CR>")
 nnoremap("<C-Up>", ":resize -3<CR>")
 nnoremap("<C-Down>", ":resize +3<CR>")
 
---jumping around vim vertically
+-- --jumping around vim vertically
 nnoremap("<C-d>", "<C-d>zz")
 nnoremap("<C-u>", "<C-u>zz")
 
@@ -31,7 +31,9 @@ nnoremap("<C-u>", "<C-u>zz")
 nnoremap("<C-p>", "<cmd>pu<CR>")
 
 -- copying the entire file
-nnoremap("<leader>y", "gg+yG")
+nnoremap("<leader>y", "ggyG")
+-- selecting the entire file
+nnoremap("<leader>V", "ggVG")
 
 -- add a new line without entering insert mode
 nnoremap("<leader>o", "mOo<Esc>`O")

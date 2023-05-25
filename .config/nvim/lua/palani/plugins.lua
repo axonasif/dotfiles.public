@@ -34,13 +34,17 @@ require("lazy").setup({
     end
   },
 
+  -- context for functions while scrolling
   'JoosepAlviste/nvim-ts-context-commentstring',
 
   -- AI Autocompletion
   'Exafunction/codeium.vim',
 
-  -- -- color theme
-  { "catppuccin/nvim", name = "catppuccin" },
+  -- color theme
+  {
+    "catppuccin/nvim",
+    name = "catppuccin"
+  },
 
   -- harpooooon for quick file switching
   'ThePrimeagen/harpoon',
@@ -50,6 +54,11 @@ require("lazy").setup({
     'nvim-treesitter/nvim-treesitter',
     build = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
   },
+
+  'nvim-treesitter/nvim-treesitter-context',
+
+  -- debug via print statements
+  "andrewferrier/debugprint.nvim",
 
   -- lazy git floating window
   'voldikss/vim-floaterm',
@@ -65,6 +74,35 @@ require("lazy").setup({
 
   -- getting cocunutieeee smoooth
   'ThePrimeagen/vim-be-good',
+
+  -- -- golang stuff
+  -- {
+  --   "olexsmir/gopher.nvim",
+  --   dependencies = { -- dependencies
+  --     "nvim-lua/plenary.nvim",
+  --     "nvim-treesitter/nvim-treesitter",
+  --   },
+  --   ft = "go",
+  --   config = function(_, opts)
+  --     require("gopher").setup(opts)
+  --   end,
+  --   build = function()
+  --     vim.cmd [[silent! GoInstallDeps]]
+  --   end,
+  -- },
+  --
+  -- -- -- debugging
+  -- "mfussenegger/nvim-dap",
+  -- {
+  --   "dreamsofcode-io/nvim-dap-go",
+  --   ft = "go",
+  --   dependencies = "mfussenegger/nvim-dap",
+  --   config = function(_, opts)
+  --     require("dap-go").setup(opts)
+  --   end
+  -- },
+
+  "slarwise/vim-tmux-send",
 
   -- lsp
   {
