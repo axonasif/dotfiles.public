@@ -38,7 +38,7 @@ require("lazy").setup({
   'JoosepAlviste/nvim-ts-context-commentstring',
 
   -- AI Autocompletion
-  'Exafunction/codeium.vim',
+  -- 'Exafunction/codeium.vim',
 
   -- color theme
   {
@@ -56,9 +56,6 @@ require("lazy").setup({
   },
 
   'nvim-treesitter/nvim-treesitter-context',
-
-  -- debug via print statements
-  "andrewferrier/debugprint.nvim",
 
   -- lazy git floating window
   'voldikss/vim-floaterm',
@@ -101,7 +98,12 @@ require("lazy").setup({
   --     require("dap-go").setup(opts)
   --   end
   -- },
-
+  {
+    'stevearc/oil.nvim',
+    opts = {},
+    -- Optional dependencies
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
   "slarwise/vim-tmux-send",
 
   -- lsp

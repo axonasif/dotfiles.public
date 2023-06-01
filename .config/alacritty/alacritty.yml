@@ -45,4 +45,3 @@ shell:
     - -l
     - -c
     - "tmux attach || tmux; exec zsh"
-

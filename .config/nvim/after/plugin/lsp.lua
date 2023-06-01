@@ -7,6 +7,8 @@ local lsp = require('lsp-zero').preset({
   suggest_lsp_servers = true,
 })
 
+local nnoremap = require("palani.keymap").nnoremap
+
 require('luasnip.loaders.from_vscode').lazy_load()
 
 cmp.setup({
@@ -32,8 +34,10 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
     select = true,
   },
   ["<C-space>"] = cmp.mapping.complete(),
-  ['<Tab>'] = cmp.config.disable
+  ['<Tab>'] = cmp.config.disable,
 })
+
+nnoremap("<C-c>", "<cmd>lua require('luasnip').jump(1)<CR>")
 
 lsp.set_preferences({
   suggest_lsp_servers = true,

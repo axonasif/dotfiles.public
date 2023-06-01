@@ -1,5 +1,6 @@
 local nnoremap = require("palani.keymap").nnoremap
 local vnoremap = require("palani.keymap").vnoremap
+local inoremap = require("palani.keymap").inoremap
 
 --moving around selected text in visual mode
 vnoremap("J", ":m '>+1<CR>gv=gv")
@@ -23,7 +24,7 @@ nnoremap("<C-Right>", ":vertical resize +3<CR>")
 nnoremap("<C-Up>", ":resize -3<CR>")
 nnoremap("<C-Down>", ":resize +3<CR>")
 
--- --jumping around vim vertically
+--jumping around vim vertically
 nnoremap("<C-d>", "<C-d>zz")
 nnoremap("<C-u>", "<C-u>zz")
 
@@ -32,6 +33,7 @@ nnoremap("<C-p>", "<cmd>pu<CR>")
 
 -- copying the entire file
 nnoremap("<leader>y", "ggyG")
+
 -- selecting the entire file
 nnoremap("<leader>V", "ggVG")
 

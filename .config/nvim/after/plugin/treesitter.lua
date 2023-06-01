@@ -12,4 +12,3 @@ require 'nvim-treesitter.configs'.setup {
     enable_automd = false,
   }
 }
-
