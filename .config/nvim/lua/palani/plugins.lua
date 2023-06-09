@@ -38,7 +38,7 @@ require("lazy").setup({
   'JoosepAlviste/nvim-ts-context-commentstring',
 
   -- AI Autocompletion
-  -- 'Exafunction/codeium.vim',
+  'Exafunction/codeium.vim',
 
   -- color theme
   {
@@ -105,7 +105,13 @@ require("lazy").setup({
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
   "slarwise/vim-tmux-send",
-
+  {
+    "ThePrimeagen/refactoring.nvim",
+    dependencies = {
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-treesitter/nvim-treesitter" }
+    }
+  },
   -- lsp
   {
     'VonHeikemen/lsp-zero.nvim',
