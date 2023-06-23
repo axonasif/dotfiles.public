@@ -9,7 +9,7 @@ require("fzf-lua").setup({
   },
 })
 
-nnoremap("<leader>g", "<cmd>lua require('fzf-lua').live_grep_native({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>",
+nnoremap("<leader>h", "<cmd>lua require('fzf-lua').live_grep_native({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>",
   { silent = true })
 nnoremap("<leader>b", "<cmd>lua require('fzf-lua').live_grep_resume({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>",
   { silent = true })

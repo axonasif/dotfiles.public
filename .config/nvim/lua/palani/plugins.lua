@@ -58,9 +58,10 @@ require("lazy").setup({
 
   'nvim-treesitter/nvim-treesitter-context',
 
-  -- lazy git floating window
+  -- git
   'voldikss/vim-floaterm',
-
+  'tpope/vim-fugitive',
+  'lewis6991/gitsigns.nvim',
   -- surround
   'tpope/vim-surround',
 
@@ -68,34 +69,8 @@ require("lazy").setup({
   "norcalli/nvim-colorizer.lua",
 
   -- getting cocunutieeee smoooth
-  'ThePrimeagen/vim-be-good',
+  -- 'ThePrimeagen/vim-be-good',
 
-  -- -- golang stuff
-  -- {
-  --   "olexsmir/gopher.nvim",
-  --   dependencies = { -- dependencies
-  --     "nvim-lua/plenary.nvim",
-  --     "nvim-treesitter/nvim-treesitter",
-  --   },
-  --   ft = "go",
-  --   config = function(_, opts)
-  --     require("gopher").setup(opts)
-  --   end,
-  --   build = function()
-  --     vim.cmd [[silent! GoInstallDeps]]
-  --   end,
-  -- },
-  --
-  -- -- -- debugging
-  -- "mfussenegger/nvim-dap",
-  -- {
-  --   "dreamsofcode-io/nvim-dap-go",
-  --   ft = "go",
-  --   dependencies = "mfussenegger/nvim-dap",
-  --   config = function(_, opts)
-  --     require("dap-go").setup(opts)
-  --   end
-  -- },
   {
     'stevearc/oil.nvim',
     opts = {},
@@ -133,3 +108,29 @@ require("lazy").setup({
     }
   }
 })
+-- -- golang stuff
+-- {
+--   "olexsmir/gopher.nvim",
+--   dependencies = { -- dependencies
+--     "nvim-lua/plenary.nvim",
+--     "nvim-treesitter/nvim-treesitter",
+--   },
+--   ft = "go",
+--   config = function(_, opts)
+--     require("gopher").setup(opts)
+--   end,
+--   build = function()
+--     vim.cmd [[silent! GoInstallDeps]]
+--   end,
+-- },
+--
+-- -- -- debugging
+-- "mfussenegger/nvim-dap",
+-- {
+--   "dreamsofcode-io/nvim-dap-go",
+--   ft = "go",
+--   dependencies = "mfussenegger/nvim-dap",
+--   config = function(_, opts)
+--     require("dap-go").setup(opts)
+--   end
+-- },
