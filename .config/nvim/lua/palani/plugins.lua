@@ -38,7 +38,8 @@ require("lazy").setup({
   'JoosepAlviste/nvim-ts-context-commentstring',
 
   -- AI Autocompletion
-  'Exafunction/codeium.vim',
+  "github/copilot.vim",
+  -- 'Exafunction/codeium.vim',
 
   -- color theme
   {
@@ -65,9 +66,6 @@ require("lazy").setup({
 
   -- nvim colors
   "norcalli/nvim-colorizer.lua",
-
-  -- undotree
-  "mbbill/undotree",
 
   -- getting cocunutieeee smoooth
   'ThePrimeagen/vim-be-good',
