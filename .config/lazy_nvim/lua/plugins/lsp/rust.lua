@@ -1,13 +1,12 @@
 return {
-
   -- add rust to treesitter
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = function(_, opts)
-      if type(opts.ensure_installed) == "table" then
-        vim.list_extend(opts.ensure_installed, { "rust" })
-      end
-    end,
+    opts = {
+      ensure_installed = {
+        "rust",
+      },
+    },
   },
 
   -- correctly setup lspconfig
@@ -16,41 +15,29 @@ return {
     dependencies = {
       {
         "simrat39/rust-tools.nvim",
-        ft = "rust",
+        -- ft = "rust",
       },
     },
     opts = {
       -- make sure mason installs the server
       servers = {
         ---@type lspconfig.options.rust_analyzer
-        rust_analyzer = {
-          settings = {
-            ["rust-analyzer"] = { nil },
-          },
-          -- mason = false,
-        },
+        rust_analyzer = {},
       },
       setup = {
-        rust_analyzer = function(_, opts)
-          require("rust-tools").setup({
+        rust_analyzer = function(_, _)
+          local rt = require("rust-tools")
+
+          rt.setup({
             tools = {
               inlay_hints = {
-                auto = true,
+                auto = false,
               },
             },
-
             server = {
-              on_attach = function(_, bufnr)
-                require("lazyvim.util").on_attach(function(_, bufnr)
-                  local rt = require("rust-tools")
-                  vim.keymap.set("n", "K", rt.hover_actions.hover_actions, { buffer = bufnr })
-                end)
+              on_attach = function(_, buffer)
+                vim.keymap.set("n", "K", rt.hover_actions.hover_actions, { buffer = buffer })
               end,
-
-              -- capabilities = require("cmp_nvim_lsp").default_capabilities(),
-              settings = {
-                ["rust-analyzer"] = { nil },
-              },
             },
           })
 

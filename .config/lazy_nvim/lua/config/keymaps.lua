@@ -9,7 +9,7 @@ local function map(mode, lhs, rhs, opts)
   -- do not create the keymap if a lazy keys handler exists
   if not keys.active[keys.parse({ lhs, mode = mode }).id] then
     opts = opts or {}
-    opts.silent = opts.silent ~= false
+    -- opts.silent = opts.silent ~= false
     if opts.remap and not vim.g.vscode then
       opts.remap = nil
     end
@@ -18,7 +18,7 @@ local function map(mode, lhs, rhs, opts)
 end
 
 -- extra save file keymap other than C-s
-map("n", "<leader>w", "<cmd>w<cr><esc>", { desc = "Save file" })
+map("n", "<leader>w", "<cmd>w<cr><esc>", { desc = "Save file", silent = true })
 
 -- Remove the LazyVim (distro) provided 'windows' keymaps and set custom ones
 -- https://github.com/LazyVim/LazyVim/blob/01fbeb139b9fceb775fefc91f27835408a4f04a9/lua/lazyvim/config/keymaps.lua#L133-L139
