@@ -3,11 +3,9 @@ return {
   -- add bash to treesitter
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = {
-        "bash",
-      },
-    },
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, { "bash" })
+    end,
   },
 
   -- ensure mason-lspconfig installs the server
@@ -23,11 +21,8 @@ return {
   -- linters and formatters
   {
     "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "shellcheck",
-        "shfmt",
-      },
-    },
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, { "shfmt", "shellcheck" })
+    end,
   },
 }

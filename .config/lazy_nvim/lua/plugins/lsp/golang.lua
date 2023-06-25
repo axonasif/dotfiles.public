@@ -3,11 +3,9 @@ return {
   -- add go to treesitter
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = {
-        "go",
-      },
-    },
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, { "go" })
+    end,
   },
 
   -- correctly setup lspconfig

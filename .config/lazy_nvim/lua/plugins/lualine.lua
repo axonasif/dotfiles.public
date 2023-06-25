@@ -1,6 +1,10 @@
 return {
   "nvim-lualine/lualine.nvim",
   opts = function(_, opts)
+    opts.options.theme = "palenight"
+    opts.options.component_separators = ""
+    opts.options.section_separators = ""
+
     opts.sections.lualine_a = {
       {
         "mode",
@@ -25,19 +29,12 @@ return {
     end
 
     -- Iterate over lualine_x section
-    i = 1
-    while i <= #opts.sections.lualine_x do
-      local component = opts.sections.lualine_x[i]
-      -- Check if it's a table and if the first element is a function from "lazy.status"
-      if
-        type(component) == "table"
-        and type(component[1]) == "function"
-        and string.find(tostring(component[1]), "lazy.status")
-      then
-        -- Unset the table
-        table.remove(opts.sections.lualine_x, i)
-      else
-        i = i + 1
+    for j, v in ipairs(opts.sections.lualine_x) do
+      -- Change this condition to match the item you want to remove
+      if v[1] == require("lazy.status").updates and v.cond == require("lazy.status").has_updates then
+        -- Remove the lazy plugins updates indicator
+        table.remove(opts.sections.lualine_x, j)
+        break
       end
     end
   end,

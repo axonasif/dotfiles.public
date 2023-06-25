@@ -2,11 +2,9 @@ return {
   -- add rust to treesitter
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = {
-        "rust",
-      },
-    },
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, { "rust" })
+    end,
   },
 
   -- correctly setup lspconfig
@@ -45,5 +43,21 @@ return {
         end,
       },
     },
+  },
+
+  -- Companion plugins
+  {
+    "saecki/crates.nvim",
+    ft = "toml",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      null_ls = {
+        enabled = true,
+        name = "crates.nvim",
+      },
+    },
+    config = function(_, opts)
+      require("crates").setup(opts)
+    end,
   },
 }
