@@ -9,6 +9,7 @@ return {
   require("plugins.lsp.bash"),
   require("plugins.lsp.golang"),
   require("plugins.lsp.docker"),
+  require("plugins.lsp.python"),
   -- BEGIN
   -- BEGIN
   -- -- END
