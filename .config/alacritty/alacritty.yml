@@ -18,16 +18,16 @@ font:
 key_bindings:
  - { key: C, mods: Command, chars: "\x01\x63" }
  - { key: R, mods: Command, chars: "\x01\x72" }
- - { key: Minus, mods: Command, chars: "\x01\x2d"}
+ - { key: Minus, mods: Command|Shift, chars: "\x01\x2d"}
  - { key: Backslash, mods: Command, chars: "\x01\x7c" }
  - { key: G, mods: Command, chars: "\x01\x07"} # lazygit
- - { key: M, mods: Command, chars: "\x01\x6d"}
- - { key: F, mods: Command, chars: "\x01\x06"}
- - { key: D, mods: Command, chars: "\x01\x64"}
- - { key: J, mods: Command, chars: "\x01\x6a"}
- - { key: K, mods: Command, chars: "\x01\x6b"}
- - { key: H, mods: Command, chars: "\x01\x68"}
- - { key: L, mods: Command, chars: "\x01\x6c"}
+ - { key: M, mods: Command, chars: "\x01\x6d"} # for maximizing current tmux pane
+ - { key: F, mods: Command, chars: "\x01\x06"} # for glancing at all active tmux sessions
+ - { key: D, mods: Command, chars: "\x01\x64"} # detach from current tmux session
+ - { key: J, mods: Command, chars: "\x01\x6a"} # resizing tmux pane
+ - { key: K, mods: Command, chars: "\x01\x6b"} # resizing tmux pane
+ - { key: H, mods: Command, chars: "\x01\x68"} # resizing tmux pane
+ - { key: L, mods: Command, chars: "\x01\x6c"} # resizing tmux pane
  - { key: Key1, mods: Command, chars: "\x011" } # select tmux window 2
  - { key: Key2, mods: Command, chars: "\x012" } #                ... 2
  - { key: Key3, mods: Command, chars: "\x013" } #                ... 3
@@ -37,7 +37,7 @@ key_bindings:
  - { key: Key7, mods: Command, chars: "\x017" } #                ... 7
  - { key: Key8, mods: Command, chars: "\x018" } #                ... 8
  - { key: Key9, mods: Command, chars: "\x019" } #                ... 9
- - { key: W, mods: Command, chars: "\x01x" } # kill the current pane
+ - { key: W, mods: Command, chars: "\x01\x77" } # kill the current pane
 
 shell:
   program: /bin/zsh

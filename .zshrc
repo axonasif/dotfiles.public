@@ -1,6 +1,8 @@
 # linkage --> ln -s ~/Documents/work/dotfiles.public/.zshrc /Users/palanikannan/.zshrc
 export ZSH="$HOME/.oh-my-zsh"
 
+. $HOME/.asdf/asdf.sh
+
 # tmux-sessionizer
 bindkey -s ^f "tmux-sessionizer\n"
 
