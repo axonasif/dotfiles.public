@@ -1,6 +1,6 @@
 return {
   "neovim/nvim-lspconfig",
-  config = function(_, opts)
+  opts = function(_, opts)
     opts.servers.tsserver.settings = vim.tbl_deep_extend("force", {}, {
       -- specify some or all of the following settings if you want to adjust the default behavior
       javascript = {
