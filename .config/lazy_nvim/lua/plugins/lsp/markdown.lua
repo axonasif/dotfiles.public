@@ -12,7 +12,7 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        pyright = {},
+        marksman = {},
       },
     },
   },
@@ -24,8 +24,8 @@ return {
       vim.list_extend(opts.ensure_installed, {
         -- "ruff",
         -- "pylint",
-        "flake8",
-        "black",
+        "write-good",
+        "markdownlint",
       })
     end,
   },
@@ -34,10 +34,8 @@ return {
     opts = function(_, opts)
       local nls = require("null-ls")
       vim.list_extend(opts.sources, {
-        nls.builtins.diagnostics.flake8,
-        nls.builtins.formatting.black,
-        -- nls.builtins.diagnostics.ruff,
-        -- nls.builtins.formatting.ruff,
+        nls.builtins.diagnostics.write_good,
+        nls.builtins.formatting.markdownlint,
       })
     end,
   },

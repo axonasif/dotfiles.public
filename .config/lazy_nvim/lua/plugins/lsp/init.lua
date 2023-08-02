@@ -10,6 +10,8 @@ return {
   require("plugins.lsp.golang"),
   require("plugins.lsp.docker"),
   require("plugins.lsp.python"),
+  require("plugins.lsp.markdown"),
+  require("plugins.lsp.javascript"),
   -- BEGIN
   -- BEGIN
   -- -- END

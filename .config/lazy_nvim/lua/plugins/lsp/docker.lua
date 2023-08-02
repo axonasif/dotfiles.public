@@ -1,12 +1,12 @@
 return {
 
   -- add dockerfile to treesitter
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { "dockerfile" })
-    end,
-  },
+  -- {
+  --   "nvim-treesitter/nvim-treesitter",
+  --   opts = function(_, opts)
+  --     vim.list_extend(opts.ensure_installed, { "dockerfile" })
+  --   end,
+  -- },
   -- correctly setup lspconfig
   {
     "neovim/nvim-lspconfig",

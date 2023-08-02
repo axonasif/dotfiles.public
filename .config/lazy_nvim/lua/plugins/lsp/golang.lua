@@ -1,11 +1,11 @@
 return {
   -- add go to treesitter
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { "go" })
-    end,
-  },
+  -- {
+  --   "nvim-treesitter/nvim-treesitter",
+  --   opts = function(_, opts)
+  --     vim.list_extend(opts.ensure_installed, { "go" })
+  --   end,
+  -- },
 
   -- correctly setup lspconfig
   {
@@ -27,36 +27,36 @@ return {
     },
     opts = {
       servers = {
-        gopls = {},
-      },
-      setup = {
-        gopls = function(_, _)
-          require("go").setup({
-            lsp_keymaps = false,
-            lsp_inlay_hints = {
-              enable = false,
-            },
-          })
-          local cfg = require("go.lsp").config() -- config() return the go.nvim gopls setup
-          local cfg_new = vim.tbl_deep_extend("force", cfg, {
-            settings = {
-              gopls = {
-                hints = {
-                  assignVariableTypes = true,
-                  compositeLiteralFields = true,
-                  compositeLiteralTypes = true,
-                  constantValues = true,
-                  functionTypeParameters = true,
-                  parameterNames = true,
-                  rangeVariableTypes = true,
-                },
+        gopls = {
+          settings = {
+            gopls = {
+              hints = {
+                assignVariableTypes = true,
+                compositeLiteralFields = true,
+                compositeLiteralTypes = true,
+                constantValues = true,
+                functionTypeParameters = true,
+                parameterNames = true,
+                rangeVariableTypes = true,
               },
             },
-          })
-          require("lspconfig").gopls.setup(cfg_new)
+          },
+          on_attach = function(client, _)
+            require("go").setup({
+              lsp_cfg = false,
+              lsp_keymaps = false,
+              lsp_inlay_hints = {
+                enable = false,
+              },
+            })
 
-          return true
-        end,
+            -- local cfg = require("go.lsp").config() -- config() return the go.nvim gopls setup
+            -- local cfg_new = vim.tbl_deep_extend("force", cfg, {
+            --   client.gopls.settings,
+            -- })
+            -- require("lspconfig").gopls.setup(cfg_new)
+          end,
+        },
       },
     },
   },
