@@ -62,14 +62,21 @@ require("lazy").setup({
   'voldikss/vim-floaterm',
   'tpope/vim-fugitive',
   'lewis6991/gitsigns.nvim',
+
   -- surround
-  'tpope/vim-surround',
+  {
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
+    end
+  },
 
   -- nvim colors
   "norcalli/nvim-colorizer.lua",
-
-  -- getting cocunutieeee smoooth
-  -- 'ThePrimeagen/vim-be-good',
 
   {
     'stevearc/oil.nvim',
@@ -77,7 +84,9 @@ require("lazy").setup({
     -- Optional dependencies
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
+
   "slarwise/vim-tmux-send",
+
   {
     "ThePrimeagen/refactoring.nvim",
     dependencies = {
@@ -85,6 +94,7 @@ require("lazy").setup({
       { "nvim-treesitter/nvim-treesitter" }
     }
   },
+
   -- lsp
   {
     'VonHeikemen/lsp-zero.nvim',

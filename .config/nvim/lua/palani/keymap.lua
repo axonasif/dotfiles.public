@@ -19,6 +19,5 @@ M.nnoremap = bind("n")
 M.vnoremap = bind("v")
 M.xnoremap = bind("x")
 M.inoremap = bind("i")
--- vim.keymap.set("n", "<c-P>",
---   "<cmd>lua require('fzf-lua').files()<CR>", { silent = true })
+
 return M

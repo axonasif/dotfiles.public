@@ -31,3 +31,5 @@ export FZF_DEFAULT_OPTS='--height 40% --layout=reverse-list --border'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export GPG_TTY=$(tty)
+
+[[ "$TERM_PROGRAM" == "CodeEditApp_Terminal" ]] && . "/Volumes/CodeEdit/CodeEdit.app/Contents/Resources/codeedit_shell_integration.zsh"
