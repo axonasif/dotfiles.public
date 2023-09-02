@@ -14,4 +14,3 @@ if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then {
   } done
   unset COMPLETION;
 } fi
-

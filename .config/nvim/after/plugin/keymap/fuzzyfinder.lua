@@ -13,6 +13,8 @@ nnoremap("<leader>h", "<cmd>lua require('fzf-lua').live_grep_native({ fzf_opts =
   { silent = true })
 nnoremap("<leader>b", "<cmd>lua require('fzf-lua').live_grep_resume({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>",
   { silent = true })
+nnoremap("<leader>j", "<cmd>lua require('fzf-lua').lsp_definitions({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>",
+  { silent = true })
 nnoremap("<leader>f", "<cmd>lua require('fzf-lua').files({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>",
   { silent = true })
 nnoremap("<leader>d", "<cmd>lua require('fzf-lua').lsp_references({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>",

@@ -40,6 +40,7 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
 nnoremap("<C-c>", "<cmd>lua require('luasnip').jump(1)<CR>")
 
 lsp.set_preferences({
+  file_ignore_patterns = { "index.d.ts" },
   suggest_lsp_servers = true,
   sign_icons = {
     error = 'E',

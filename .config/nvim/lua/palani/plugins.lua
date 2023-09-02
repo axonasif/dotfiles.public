@@ -59,8 +59,6 @@ require("lazy").setup({
   'nvim-treesitter/nvim-treesitter-context',
 
   -- git
-  'voldikss/vim-floaterm',
-  'tpope/vim-fugitive',
   'lewis6991/gitsigns.nvim',
 
   -- surround
