@@ -1,65 +1,6 @@
-local luasnip = require 'luasnip'
-local cmp = require('cmp')
-local lsp = require('lsp-zero').preset({
-  name = 'minimal',
-  set_lsp_keymaps = true,
-  manage_nvim_cmp = true,
-  suggest_lsp_servers = true,
-})
+local lsp_zero = require('lsp-zero')
 
-local nnoremap = require("palani.keymap").nnoremap
-
-require('luasnip.loaders.from_vscode').lazy_load()
-
-cmp.setup({
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-  },
-})
-
-local cmp_mappings = lsp.defaults.cmp_mappings({
-  ['<C-p>'] = cmp.mapping.select_prev_item(),
-  ['<C-n>'] = function(fallback)
-    if cmp.visible() then
-      cmp.select_next_item()
-    elseif luasnip.expand_or_jumpable() then
-      luasnip.expand_or_jump()
-    else
-      fallback()
-    end
-  end,
-  ['<CR>'] = cmp.mapping.confirm {
-    behavior = cmp.ConfirmBehavior.Replace,
-    select = true,
-  },
-  ["<C-space>"] = cmp.mapping.complete(),
-  ['<Tab>'] = cmp.config.disable,
-})
-
-nnoremap("<C-c>", "<cmd>lua require('luasnip').jump(1)<CR>")
-
-lsp.set_preferences({
-  file_ignore_patterns = { "index.d.ts" },
-  suggest_lsp_servers = true,
-  sign_icons = {
-    error = 'E',
-    warn = 'W',
-    hint = 'H',
-    info = 'I'
-  }
-})
-
-vim.diagnostic.config({
-  virtual_text = false,
-  globals = { "vim" },
-})
-
-lsp.setup_nvim_cmp({
-  mapping = cmp_mappings
-})
-
-lsp.on_attach(function(client, bufnr)
+lsp_zero.on_attach(function(client, bufnr)
   local options = { buffer = bufnr, remap = false }
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, options)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, options)
@@ -80,4 +21,60 @@ lsp.on_attach(function(client, bufnr)
   end)
 end)
 
-lsp.setup()
+lsp_zero.set_preferences({
+  file_ignore_patterns = { "*.d.ts" },
+  suggest_lsp_servers = true,
+  sign_icons = {
+    error = 'E',
+    warn = 'W',
+    hint = 'H',
+    info = 'I'
+  }
+})
+
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  ensure_installed = {'tsserver', 'rust_analyzer'},
+  handlers = {
+    lsp_zero.default_setup,
+    lua_ls = function()
+      local lua_opts = lsp_zero.nvim_lua_ls()
+      require('lspconfig').lua_ls.setup(lua_opts)
+    end,
+  }
+})
+
+local cmp = require('cmp')
+local luasnip = require 'luasnip'
+
+cmp.setup({
+  sources = {
+    {name = 'path'},
+    {name = 'nvim_lsp'},
+    {name = 'nvim_lua'},
+  },
+  formatting = lsp_zero.cmp_format(),
+  mapping = cmp.mapping.preset.insert({
+  ['<C-p>'] = cmp.mapping.select_prev_item(),
+  ['<C-n>'] = function(fallback)
+    if cmp.visible() then
+      cmp.select_next_item()
+    elseif luasnip.expand_or_jumpable() then
+      luasnip.expand_or_jump()
+    else
+      fallback()
+    end
+  end,
+  ['<CR>'] = cmp.mapping.confirm {
+    behavior = cmp.ConfirmBehavior.Replace,
+    select = true,
+  },
+  ["<C-space>"] = cmp.mapping.complete(),
+  ['<Tab>'] = cmp.config.disable,
+  }),
+})
+
+require('luasnip.loaders.from_vscode').lazy_load()
+
+local nnoremap = require("palani.keymap").nnoremap
+nnoremap("<C-c>", "<cmd>lua require('luasnip').jump(1)<CR>")
