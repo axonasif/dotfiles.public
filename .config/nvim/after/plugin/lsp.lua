@@ -1,8 +1,19 @@
 local lsp_zero = require('lsp-zero')
+local conform = require('conform')
 
 lsp_zero.on_attach(function(client, bufnr)
   local options = { buffer = bufnr, remap = false }
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, options)
+
+  if vim.bo.filetype == 'typescript' or vim.bo.filetype == 'typescriptreact' then
+    vim.keymap.set('n', 'gd', "<cmd>TSToolsGoToSourceDefinition<CR>", options)
+  else
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, options)
+  end
+
+  if vim.bo.filetype == 'typescript' or vim.bo.filetype == 'typescriptreact' then
+    vim.keymap.set('n', 'frn', "<cmd>TSToolsRenameFile<CR>", options)
+  end
+
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, options)
   vim.keymap.set('n', '<leader>vws', vim.lsp.buf.workspace_symbol, options)
   vim.keymap.set('n', '<leader>vd', vim.diagnostic.open_float, options)
@@ -17,9 +28,14 @@ lsp_zero.on_attach(function(client, bufnr)
   vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, options)
   vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, options)
   vim.keymap.set({ 'n', 'x' }, '<leader>i', function()
-    vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+    conform.format()
   end)
 end)
+
+vim.diagnostic.config({
+  virtual_text = false,
+  globals = { "vim" },
+})
 
 lsp_zero.set_preferences({
   file_ignore_patterns = { "*.d.ts" },
@@ -34,7 +50,7 @@ lsp_zero.set_preferences({
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = {'tsserver', 'rust_analyzer'},
+  ensure_installed = { 'tsserver', 'rust_analyzer' },
   handlers = {
     lsp_zero.default_setup,
     lua_ls = function()
@@ -49,28 +65,28 @@ local luasnip = require 'luasnip'
 
 cmp.setup({
   sources = {
-    {name = 'path'},
-    {name = 'nvim_lsp'},
-    {name = 'nvim_lua'},
+    { name = 'path' },
+    { name = 'nvim_lsp' },
+    { name = 'nvim_lua' },
   },
   formatting = lsp_zero.cmp_format(),
   mapping = cmp.mapping.preset.insert({
-  ['<C-p>'] = cmp.mapping.select_prev_item(),
-  ['<C-n>'] = function(fallback)
-    if cmp.visible() then
-      cmp.select_next_item()
-    elseif luasnip.expand_or_jumpable() then
-      luasnip.expand_or_jump()
-    else
-      fallback()
-    end
-  end,
-  ['<CR>'] = cmp.mapping.confirm {
-    behavior = cmp.ConfirmBehavior.Replace,
-    select = true,
-  },
-  ["<C-space>"] = cmp.mapping.complete(),
-  ['<Tab>'] = cmp.config.disable,
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end,
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ["<C-space>"] = cmp.mapping.complete(),
+    ['<Tab>'] = cmp.config.disable,
   }),
 })
 

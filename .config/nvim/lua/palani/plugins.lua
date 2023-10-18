@@ -47,6 +47,28 @@ require("lazy").setup({
     name = "catppuccin"
   },
 
+  -- formatter
+  {
+    'stevearc/conform.nvim',
+    opts = {
+      formatters_by_ft = {
+        go = { 'gofumpt', 'goimports', 'golines' },
+        css = { 'prettierd' },
+        javascript = { 'prettierd' },
+        javascriptreact = { 'prettierd' },
+        typescript = { 'prettierd' },
+        typescriptreact = { 'prettierd' },
+        markdown = { 'prettierd' },
+
+        lua = { 'stylua' },
+
+        sh = { 'shfmt' },
+        zsh = { 'shfmt' },
+      },
+      timeout_ms = 10000,
+    },
+  },
+
   -- harpooooon for quick file switching
   'ThePrimeagen/harpoon',
 
@@ -93,6 +115,11 @@ require("lazy").setup({
     }
   },
 
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    opts = {},
+  },
   -- lsp
   {
     'VonHeikemen/lsp-zero.nvim',
