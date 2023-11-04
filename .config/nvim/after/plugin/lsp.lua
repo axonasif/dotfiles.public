@@ -1,4 +1,6 @@
 local lsp_zero = require('lsp-zero')
+lsp_zero.extend_lspconfig();
+
 local conform = require('conform')
 
 lsp_zero.on_attach(function(client, bufnr)
@@ -50,7 +52,6 @@ lsp_zero.set_preferences({
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = { 'tsserver', 'rust_analyzer' },
   handlers = {
     lsp_zero.default_setup,
     lua_ls = function()

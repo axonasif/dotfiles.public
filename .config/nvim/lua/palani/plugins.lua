@@ -1,148 +1,154 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable", -- latest stable release
+		lazypath,
+	})
 end
 
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  -- dependencies
-  'nvim-lua/plenary.nvim',
+	-- dependencies
+	"nvim-lua/plenary.nvim",
 
-  -- icons
-  'nvim-tree/nvim-web-devicons',
+	-- icons
+	"nvim-tree/nvim-web-devicons",
 
-  -- fuzzy finder
-  'ibhagwan/fzf-lua',
+	-- fuzzy finder
+	"ibhagwan/fzf-lua",
 
-  -- window navigation
-  'christoomey/vim-tmux-navigator',
+	-- window navigation
+	"christoomey/vim-tmux-navigator",
 
-  -- comments in nvim
-  {
-    'numToStr/Comment.nvim',
-    config = function()
-      require('Comment').setup()
-    end
-  },
+	-- comments in nvim
+	{
+		"numToStr/Comment.nvim",
+		config = function()
+			require("Comment").setup()
+		end,
+	},
 
-  -- context for functions while scrolling
-  'JoosepAlviste/nvim-ts-context-commentstring',
+	-- context for functions while scrolling
+	"JoosepAlviste/nvim-ts-context-commentstring",
 
-  -- AI Autocompletion
-  "github/copilot.vim",
-  -- 'Exafunction/codeium.vim',
+	-- AI Autocompletion
+	"github/copilot.vim",
 
-  -- color theme
-  {
-    "catppuccin/nvim",
-    name = "catppuccin"
-  },
+	-- color theme
+	{
+		"catppuccin/nvim",
+		name = "catppuccin",
+	},
 
-  -- formatter
-  {
-    'stevearc/conform.nvim',
-    opts = {
-      formatters_by_ft = {
-        go = { 'gofumpt', 'goimports', 'golines' },
-        css = { 'prettierd' },
-        javascript = { 'prettierd' },
-        javascriptreact = { 'prettierd' },
-        typescript = { 'prettierd' },
-        typescriptreact = { 'prettierd' },
-        markdown = { 'prettierd' },
+	-- formatter
+	{
+		"stevearc/conform.nvim",
+		opts = {
+			formatters_by_ft = {
+				go = { "gofumpt", "goimports", "golines" },
+				css = { "prettierd" },
+				javascript = { "prettierd" },
+				javascriptreact = { "prettierd" },
+				typescript = { "prettierd" },
+				typescriptreact = { "prettierd" },
+				markdown = { "prettierd" },
 
-        lua = { 'stylua' },
+				lua = { "stylua" },
 
-        sh = { 'shfmt' },
-        zsh = { 'shfmt' },
-      },
-      timeout_ms = 10000,
-    },
-  },
+				sh = { "shfmt" },
+				zsh = { "shfmt" },
+			},
+			timeout_ms = 10000,
+		},
+	},
 
-  -- harpooooon for quick file switching
-  'ThePrimeagen/harpoon',
+	-- treesitter syntax highlighting
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = function()
+			require("nvim-treesitter.install").update({ with_sync = true })
+		end,
+	},
+	"nvim-treesitter/nvim-treesitter-context",
 
-  -- treesitter syntax highlighting
-  {
-    'nvim-treesitter/nvim-treesitter',
-    build = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
-  },
+	-- git
+	"lewis6991/gitsigns.nvim",
 
-  'nvim-treesitter/nvim-treesitter-context',
+	-- surround
+	{
+		"kylechui/nvim-surround",
+		version = "*", -- Use for stability; omit to use `main` branch for the latest features
+		event = "VeryLazy",
+		config = function()
+			require("nvim-surround").setup({
+				-- Configuration here, or leave empty to use defaults
+			})
+		end,
+	},
 
-  -- git
-  'lewis6991/gitsigns.nvim',
+	-- nvim colors
+	"norcalli/nvim-colorizer.lua",
 
-  -- surround
-  {
-    "kylechui/nvim-surround",
-    version = "*", -- Use for stability; omit to use `main` branch for the latest features
-    event = "VeryLazy",
-    config = function()
-      require("nvim-surround").setup({
-        -- Configuration here, or leave empty to use defaults
-      })
-    end
-  },
+	-- file explorer
+	{
+		"stevearc/oil.nvim",
+		opts = {},
+		-- Optional dependencies
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+	},
 
-  -- nvim colors
-  "norcalli/nvim-colorizer.lua",
+	-- send commands from vim to tmux terminal, example executing the current js/java file
+	"slarwise/vim-tmux-send",
 
-  {
-    'stevearc/oil.nvim',
-    opts = {},
-    -- Optional dependencies
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-  },
+	-- refactoring code
+	{
+		"ThePrimeagen/refactoring.nvim",
+		dependencies = {
+			{ "nvim-lua/plenary.nvim" },
+			{ "nvim-treesitter/nvim-treesitter" },
+		},
+	},
 
-  "slarwise/vim-tmux-send",
+	-- harpooooon for quick file switching
+	"ThePrimeagen/harpoon",
 
-  {
-    "ThePrimeagen/refactoring.nvim",
-    dependencies = {
-      { "nvim-lua/plenary.nvim" },
-      { "nvim-treesitter/nvim-treesitter" }
-    }
-  },
+	-- better ts tools
+	{
+		"pmizio/typescript-tools.nvim",
+		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+		opts = {},
+	},
 
-  {
-    "pmizio/typescript-tools.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    opts = {},
-  },
-  -- lsp
-  {
-    'VonHeikemen/lsp-zero.nvim',
-    dependencies = {
-      -- LSP Support
-      'neovim/nvim-lspconfig',
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
+	-- lsp
+	{
+		"VonHeikemen/lsp-zero.nvim",
+		dependencies = {
+			-- LSP Support
+			"neovim/nvim-lspconfig",
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
 
-      -- Autocompletion
-      'hrsh7th/nvim-cmp',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'saadparwaiz1/cmp_luasnip',
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-nvim-lua',
+			-- Autocompletion
+			"hrsh7th/nvim-cmp",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+			"saadparwaiz1/cmp_luasnip",
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-nvim-lua",
 
-      -- Snippets
-      'L3MON4D3/LuaSnip',
-      'rafamadriz/friendly-snippets',
-    }
-  }
+			-- Snippets
+			"L3MON4D3/LuaSnip",
+			"rafamadriz/friendly-snippets",
+		},
+	},
 })
+
 -- -- golang stuff
 -- {
 --   "olexsmir/gopher.nvim",

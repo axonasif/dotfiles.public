@@ -1,6 +1,5 @@
 local nnoremap = require("palani.keymap").nnoremap
 local vnoremap = require("palani.keymap").vnoremap
-local inoremap = require("palani.keymap").inoremap
 
 --moving around selected text in visual mode
 vnoremap("J", ":m '>+1<CR>gv=gv")
@@ -35,7 +34,7 @@ nnoremap("<C-p>", "<cmd>pu<CR>")
 nnoremap("<leader>y", "ggyG")
 
 -- selecting the entire file
-nnoremap("<leader>V", "ggVG")
+nnoremap("<leader>v", "ggVG")
 
 -- add a new line without entering insert mode
 nnoremap("<leader>o", "mOo<Esc>`O")

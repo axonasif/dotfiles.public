@@ -39,9 +39,10 @@ key_bindings:
  - { key: Key9, mods: Command, chars: "\x019" } #                ... 9
  - { key: W, mods: Command, chars: "\x01\x77" } # kill the current pane
 
+# Start tmux session by default on opening alacritty if a sessin exists
 shell:
   program: /bin/zsh
   args:
     - -l
     - -c
-    - "tmux attach || tmux; exec zsh"
+    - "tmux has-session && tmux attach || true; exec zsh"
