@@ -1,97 +1,168 @@
-local lsp_zero = require('lsp-zero')
-lsp_zero.extend_lspconfig();
+local lsp_zero = require("lsp-zero")
+local conform = require("conform")
+local mason = require("mason")
+local mason_lspconfig = require("mason-lspconfig")
+local cmp = require("cmp")
+local cmp_action = require("lsp-zero").cmp_action()
+local luasnip = require("luasnip")
+local nnoremap = require("palani.keymap").nnoremap
 
-local conform = require('conform')
+mason.setup({})
+mason_lspconfig.setup({
+	handlers = {
+		lsp_zero.default_setup,
+		-- to avoid global variable vim error
+		lua_ls = function()
+			local lua_opts = lsp_zero.nvim_lua_ls()
+			require("lspconfig").lua_ls.setup(lua_opts)
+		end,
+	},
+})
 
 lsp_zero.on_attach(function(client, bufnr)
-  local options = { buffer = bufnr, remap = false }
+	lsp_zero.default_keymaps({ buffer = bufnr })
+	local options = { buffer = bufnr, remap = false }
 
-  if vim.bo.filetype == 'typescript' or vim.bo.filetype == 'typescriptreact' then
-    vim.keymap.set('n', 'gd', "<cmd>TSToolsGoToSourceDefinition<CR>", options)
-  else
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, options)
-  end
+	if vim.bo.filetype == "typescript" or vim.bo.filetype == "typescriptreact" then
+		nnoremap("gd", "<cmd>TSToolsGoToSourceDefinition<CR>", options)
+	else
+		nnoremap("gd", vim.lsp.buf.definition, options)
+	end
 
-  if vim.bo.filetype == 'typescript' or vim.bo.filetype == 'typescriptreact' then
-    vim.keymap.set('n', 'frn', "<cmd>TSToolsRenameFile<CR>", options)
-  end
+	if vim.bo.filetype == "typescript" or vim.bo.filetype == "typescriptreact" then
+		nnoremap("frn", "<cmd>TSToolsRenameFile<CR>", options)
+	end
 
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, options)
-  vim.keymap.set('n', '<leader>vws', vim.lsp.buf.workspace_symbol, options)
-  vim.keymap.set('n', '<leader>vd', vim.diagnostic.open_float, options)
-  vim.keymap.set('n', '[d', vim.diagnostic.goto_next, options)
-  vim.keymap.set('n', ']d', vim.diagnostic.goto_prev, options)
-  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, options)
-  vim.keymap.set('n', '<leader>vrr', vim.lsp.buf.references, options)
-  vim.keymap.set('n', '<leader>vrn', vim.lsp.buf.rename, options)
+	nnoremap("K", vim.lsp.buf.hover, options)
+	nnoremap("<leader>vws", vim.lsp.buf.workspace_symbol, options)
+	nnoremap("<leader>vd", vim.diagnostic.open_float, options)
+	nnoremap("[d", vim.diagnostic.goto_next, options)
+	nnoremap("]d", vim.diagnostic.goto_prev, options)
+	nnoremap("<leader>ca", vim.lsp.buf.code_action, options)
+	nnoremap("<leader>vrr", vim.lsp.buf.references, options)
+	nnoremap("<leader>vrn", vim.lsp.buf.rename, options)
 
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, options)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, options)
-  vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, options)
-  vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, options)
-  vim.keymap.set({ 'n', 'x' }, '<leader>i', function()
-    conform.format()
-  end)
+	nnoremap("gD", vim.lsp.buf.declaration, options)
+	nnoremap("gi", vim.lsp.buf.implementation, options)
+	nnoremap("<space>e", vim.diagnostic.open_float, options)
+	nnoremap("<space>q", vim.diagnostic.setloclist, options)
+	vim.keymap.set({ "n", "x" }, "<leader>i", function()
+		conform.format()
+	end)
 end)
 
 vim.diagnostic.config({
-  virtual_text = false,
-  globals = { "vim" },
+	virtual_text = false,
+	globals = { "vim" },
 })
 
 lsp_zero.set_preferences({
-  file_ignore_patterns = { "*.d.ts" },
-  suggest_lsp_servers = true,
-  sign_icons = {
-    error = 'E',
-    warn = 'W',
-    hint = 'H',
-    info = 'I'
-  }
+	file_ignore_patterns = { "*.d.ts" },
+	suggest_lsp_servers = true,
+	sign_icons = {
+		error = "E",
+		warn = "W",
+		hint = "H",
+		info = "I",
+	},
 })
 
-require('mason').setup({})
-require('mason-lspconfig').setup({
-  handlers = {
-    lsp_zero.default_setup,
-    lua_ls = function()
-      local lua_opts = lsp_zero.nvim_lua_ls()
-      require('lspconfig').lua_ls.setup(lua_opts)
-    end,
-  }
-})
+-- add vscode like snippets support
+require("luasnip.loaders.from_vscode").lazy_load()
 
-local cmp = require('cmp')
-local luasnip = require 'luasnip'
+-- add .tsx snippets support for .ts files
+require("luasnip").filetype_extend("typescript", { "typescriptreact" })
 
 cmp.setup({
-  sources = {
-    { name = 'path' },
-    { name = 'nvim_lsp' },
-    { name = 'nvim_lua' },
-  },
-  formatting = lsp_zero.cmp_format(),
-  mapping = cmp.mapping.preset.insert({
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end,
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-    ["<C-space>"] = cmp.mapping.complete(),
-    ['<Tab>'] = cmp.config.disable,
-  }),
+	sources = {
+		{ name = "path" },
+		{ name = "luasnip" }, -- For luasnip users.
+		{ name = "nvim_lsp" },
+		{ name = "nvim_lua" },
+		{ name = "buffer" },
+	},
+	window = {
+		documentation = cmp.config.window.bordered(),
+	},
+	formatting = {
+		-- changing the order of fields so the icon is the first
+		fields = { "menu", "abbr", "kind" },
+		snippet = {
+			-- REQUIRED - you must specify a snippet engine
+			expand = function(args)
+				require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
+			end,
+		},
+
+		-- here is where the change happens
+		format = function(entry, item)
+			local menu_icon = {
+				nvim_lsp = "λ",
+				luasnip = "⋗",
+				buffer = "Ω",
+				path = "🖫",
+				nvim_lua = "Π",
+			}
+
+			item.menu = menu_icon[entry.source.name]
+			return item
+		end,
+	},
+	mapping = cmp.mapping.preset.insert({
+		["<C-p>"] = cmp.mapping.select_prev_item(),
+		["<C-n>"] = function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			elseif luasnip.expand_or_jumpable() then
+				luasnip.expand_or_jump()
+			else
+				fallback()
+			end
+		end,
+		["<CR>"] = cmp.mapping.confirm({
+			behavior = cmp.ConfirmBehavior.Replace,
+			select = true,
+		}),
+		-- Disable Tab key to navigate completion menu for AI completions
+		["<Tab>"] = cmp.config.disable,
+		["<S-Tab>"] = cmp_action.luasnip_supertab(),
+
+		-- Ctrl+Space to trigger completion menu
+		["<C-Space>"] = cmp.mapping.complete(),
+
+		-- Navigate between snippet placeholder
+		["<C-f>"] = cmp_action.luasnip_jump_forward(),
+		["<C-b>"] = cmp_action.luasnip_jump_backward(),
+
+		-- Scroll up and down in the completion documentation
+		["<C-u>"] = cmp.mapping.scroll_docs(-4),
+		["<C-d>"] = cmp.mapping.scroll_docs(4),
+	}),
 })
 
-require('luasnip.loaders.from_vscode').lazy_load()
+-- Set configuration for specific filetype.
+cmp.setup.filetype("gitcommit", {
+	sources = cmp.config.sources({
+		{ name = "git" }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
+	}, {
+		{ name = "buffer" },
+	}),
+})
 
-local nnoremap = require("palani.keymap").nnoremap
-nnoremap("<C-c>", "<cmd>lua require('luasnip').jump(1)<CR>")
+-- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline({ "/", "?" }, {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = {
+		{ name = "buffer" },
+	},
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(":", {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = cmp.config.sources({
+		{ name = "path" },
+	}, {
+		{ name = "cmdline" },
+	}),
+})

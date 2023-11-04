@@ -1,6 +1,9 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local uv = vim.uv or vim.loop
 
-if not vim.loop.fs_stat(lazypath) then
+-- Auto-install lazy.nvim if not present
+if not uv.fs_stat(lazypath) then
+	print("Installing lazy.nvim....")
 	vim.fn.system({
 		"git",
 		"clone",
@@ -9,6 +12,7 @@ if not vim.loop.fs_stat(lazypath) then
 		"--branch=stable", -- latest stable release
 		lazypath,
 	})
+	print("Done.")
 end
 
 vim.opt.rtp:prepend(lazypath)
@@ -128,50 +132,45 @@ require("lazy").setup({
 	-- lsp
 	{
 		"VonHeikemen/lsp-zero.nvim",
+		branch = "v3.x",
+		lazy = true,
+		config = false,
+		init = function()
+			-- Disable automatic setup, we are doing it manually
+			vim.g.lsp_zero_extend_cmp = 0
+			vim.g.lsp_zero_extend_lspconfig = 0
+		end,
 		dependencies = {
 			-- LSP Support
-			"neovim/nvim-lspconfig",
-			"williamboman/mason.nvim",
+			{
+				"neovim/nvim-lspconfig",
+				dependencies = {
+					-- Autocompletion
+					{
+						"hrsh7th/nvim-cmp",
+						dependencies = {
+							{
+								"L3MON4D3/LuaSnip",
+								dependencies = { "saadparwaiz1/cmp_luasnip", "rafamadriz/friendly-snippets" },
+							},
+							-- for icons in completion menu
+							"onsails/lspkind.nvim",
+						},
+					},
+					"hrsh7th/cmp-nvim-lsp",
+					"hrsh7th/cmp-nvim-lua",
+					"hrsh7th/cmp-buffer",
+					"hrsh7th/cmp-path",
+				},
+			},
+
+			-- Mason Support for installing and managing LSP Servers
+			{
+				"williamboman/mason.nvim",
+				lazy = false,
+				config = true,
+			},
 			"williamboman/mason-lspconfig.nvim",
-
-			-- Autocompletion
-			"hrsh7th/nvim-cmp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"saadparwaiz1/cmp_luasnip",
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-nvim-lua",
-
-			-- Snippets
-			"L3MON4D3/LuaSnip",
-			"rafamadriz/friendly-snippets",
 		},
 	},
 })
-
--- -- golang stuff
--- {
---   "olexsmir/gopher.nvim",
---   dependencies = { -- dependencies
---     "nvim-lua/plenary.nvim",
---     "nvim-treesitter/nvim-treesitter",
---   },
---   ft = "go",
---   config = function(_, opts)
---     require("gopher").setup(opts)
---   end,
---   build = function()
---     vim.cmd [[silent! GoInstallDeps]]
---   end,
--- },
---
--- -- -- debugging
--- "mfussenegger/nvim-dap",
--- {
---   "dreamsofcode-io/nvim-dap-go",
---   ft = "go",
---   dependencies = "mfussenegger/nvim-dap",
---   config = function(_, opts)
---     require("dap-go").setup(opts)
---   end
--- },
