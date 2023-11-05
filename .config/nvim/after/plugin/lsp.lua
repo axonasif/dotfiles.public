@@ -1,5 +1,4 @@
 local lsp_zero = require("lsp-zero")
-local conform = require("conform")
 local mason = require("mason")
 local mason_lspconfig = require("mason-lspconfig")
 local cmp = require("cmp")
@@ -9,6 +8,16 @@ local nnoremap = require("palani.keymap").nnoremap
 
 mason.setup({})
 mason_lspconfig.setup({
+	ensure_installed = {
+		"lua_ls",
+		"tsserver",
+		"html",
+		"cssls",
+		"bashls",
+		"gopls",
+		"tailwindcss",
+	},
+
 	handlers = {
 		lsp_zero.default_setup,
 		-- to avoid global variable vim error
@@ -46,9 +55,6 @@ lsp_zero.on_attach(function(client, bufnr)
 	nnoremap("gi", vim.lsp.buf.implementation, options)
 	nnoremap("<space>e", vim.diagnostic.open_float, options)
 	nnoremap("<space>q", vim.diagnostic.setloclist, options)
-	vim.keymap.set({ "n", "x" }, "<leader>i", function()
-		conform.format()
-	end)
 end)
 
 vim.diagnostic.config({

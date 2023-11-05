@@ -53,32 +53,24 @@ require("lazy").setup({
 	-- formatter
 	{
 		"stevearc/conform.nvim",
-		opts = {
-			formatters_by_ft = {
-				go = { "gofumpt", "goimports", "golines" },
-				css = { "prettierd" },
-				javascript = { "prettierd" },
-				javascriptreact = { "prettierd" },
-				typescript = { "prettierd" },
-				typescriptreact = { "prettierd" },
-				markdown = { "prettierd" },
+		event = { "BufWritePre", "BufNewFile" },
+	},
 
-				lua = { "stylua" },
-
-				sh = { "shfmt" },
-				zsh = { "shfmt" },
-			},
-			timeout_ms = 10000,
-		},
+	-- linter
+	{
+		"mfussenegger/nvim-lint",
+		event = { "BufWritePre", "BufNewFile" },
 	},
 
 	-- treesitter syntax highlighting
 	{
 		"nvim-treesitter/nvim-treesitter",
+		event = { "BufWritePre", "BufNewFile" },
 		build = function()
 			require("nvim-treesitter.install").update({ with_sync = true })
 		end,
 	},
+
 	"nvim-treesitter/nvim-treesitter-context",
 
 	-- git
@@ -141,6 +133,14 @@ require("lazy").setup({
 			vim.g.lsp_zero_extend_lspconfig = 0
 		end,
 		dependencies = {
+			-- Mason Support for installing and managing LSP Servers
+			{
+				"williamboman/mason.nvim",
+				lazy = false,
+				config = true,
+			},
+			"williamboman/mason-lspconfig.nvim",
+
 			-- LSP Support
 			{
 				"neovim/nvim-lspconfig",
@@ -163,14 +163,6 @@ require("lazy").setup({
 					"hrsh7th/cmp-path",
 				},
 			},
-
-			-- Mason Support for installing and managing LSP Servers
-			{
-				"williamboman/mason.nvim",
-				lazy = false,
-				config = true,
-			},
-			"williamboman/mason-lspconfig.nvim",
 		},
 	},
 })
