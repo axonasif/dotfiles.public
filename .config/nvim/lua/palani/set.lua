@@ -5,23 +5,23 @@ vim.opt.relativenumber = true
 
 vim.opt.errorbells = false
 
-vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
+vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
-vim.opt.textwidth=80
+vim.opt.textwidth = 80
 
-vim.opt.timeoutlen=1000
-vim.opt.ttimeoutlen=0
-vim.opt.synmaxcol=200
+vim.opt.timeoutlen = 1000
+vim.opt.ttimeoutlen = 0
+vim.opt.synmaxcol = 200
 
 vim.opt.smartindent = true
 
 -- common status lines across buffer
-vim.opt.laststatus=3
+vim.opt.laststatus = 3
 
 -- decent crisp seperator
-vim.cmd('highlight WinSeparator guibg=None')
+vim.cmd("highlight WinSeparator guibg=None")
 
 vim.opt.wrap = false
 

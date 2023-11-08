@@ -17,14 +17,6 @@ conform.setup({
 	format_on_save = {
 		lsp_fallback = true,
 		async = false,
-		timeout_ms = 500,
+		timeout_ms = 10000,
 	},
 })
-
-vim.keymap.set({ "n", "v", "x" }, "<leader>i", function()
-	conform.format({
-		lsp_fallback = true,
-		async = false,
-		timeout_ms = 500,
-	})
-end)

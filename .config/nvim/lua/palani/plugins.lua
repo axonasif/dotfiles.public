@@ -121,6 +121,16 @@ require("lazy").setup({
 		opts = {},
 	},
 
+	-- lsp progress
+	{
+		"j-hui/fidget.nvim",
+		tag = "legacy",
+		event = "LspAttach",
+		opts = {
+			-- options
+		},
+	},
+
 	-- lsp
 	{
 		"VonHeikemen/lsp-zero.nvim",

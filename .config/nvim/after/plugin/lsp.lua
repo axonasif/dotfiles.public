@@ -5,7 +5,9 @@ local cmp = require("cmp")
 local cmp_action = require("lsp-zero").cmp_action()
 local luasnip = require("luasnip")
 local nnoremap = require("palani.keymap").nnoremap
+local conform = require("conform")
 
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
 mason.setup({})
 mason_lspconfig.setup({
 	ensure_installed = {
@@ -43,23 +45,27 @@ lsp_zero.on_attach(function(client, bufnr)
 	end
 
 	nnoremap("K", vim.lsp.buf.hover, options)
-	nnoremap("<leader>vws", vim.lsp.buf.workspace_symbol, options)
-	nnoremap("<leader>vd", vim.diagnostic.open_float, options)
-	nnoremap("[d", vim.diagnostic.goto_next, options)
-	nnoremap("]d", vim.diagnostic.goto_prev, options)
-	nnoremap("<leader>ca", vim.lsp.buf.code_action, options)
-	nnoremap("<leader>vrr", vim.lsp.buf.references, options)
-	nnoremap("<leader>vrn", vim.lsp.buf.rename, options)
-
+	nnoremap("gn", vim.diagnostic.goto_next, options)
+	nnoremap("gp", vim.diagnostic.goto_prev, options)
 	nnoremap("gD", vim.lsp.buf.declaration, options)
+	nnoremap("gt", vim.lsp.buf.type_definition, options)
 	nnoremap("gi", vim.lsp.buf.implementation, options)
+	nnoremap("<leader>ca", vim.lsp.buf.code_action, options)
+	nnoremap("<leader>gr", vim.lsp.buf.references, options)
+	nnoremap("<leader>rn", vim.lsp.buf.rename, options)
 	nnoremap("<space>e", vim.diagnostic.open_float, options)
 	nnoremap("<space>q", vim.diagnostic.setloclist, options)
+	vim.keymap.set({ "n", "v", "x" }, "<leader>i", function()
+		conform.format({
+			lsp_fallback = true,
+			async = false,
+			timeout_ms = 10000,
+		})
+	end)
 end)
 
 vim.diagnostic.config({
 	virtual_text = false,
-	globals = { "vim" },
 })
 
 lsp_zero.set_preferences({
@@ -146,29 +152,10 @@ cmp.setup({
 	}),
 })
 
--- Set configuration for specific filetype.
-cmp.setup.filetype("gitcommit", {
-	sources = cmp.config.sources({
-		{ name = "git" }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
-	}, {
-		{ name = "buffer" },
-	}),
-})
-
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline({ "/", "?" }, {
 	mapping = cmp.mapping.preset.cmdline(),
 	sources = {
 		{ name = "buffer" },
 	},
-})
-
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(":", {
-	mapping = cmp.mapping.preset.cmdline(),
-	sources = cmp.config.sources({
-		{ name = "path" },
-	}, {
-		{ name = "cmdline" },
-	}),
 })

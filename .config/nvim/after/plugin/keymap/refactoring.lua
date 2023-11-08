@@ -46,7 +46,6 @@ nnoremap(
 -- You can also use below = true here to to change the position of the printf
 -- statement (or set two remaps for either one). This remap must be made in normal mode.
 nnoremap("<leader>rp", ":lua require('refactoring').debug.printf({below = false})<CR>", { noremap = true })
-
 -- Print var
 -- Remap in normal mode and passing { normal = true } will automatically find the variable under the cursor and print it
 nnoremap("<leader>rv", ":lua require('refactoring').debug.print_var({ normal = true })<CR>", { noremap = true })

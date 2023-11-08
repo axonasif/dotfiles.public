@@ -29,6 +29,16 @@ nnoremap(
 	{ silent = true }
 )
 nnoremap(
+	"<leader>n",
+	"<cmd>lua require('fzf-lua').files({ fzf_opts = {['--layout'] = 'reverse-list'}, resume='true'})<CR>",
+	{ silent = true }
+)
+nnoremap(
+	"<leader>wd",
+	"<cmd>lua require('fzf-lua').lsp_workspace_diagnostics({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>",
+	{ silent = true }
+)
+nnoremap(
 	"<leader>d",
 	"<cmd>lua require('fzf-lua').lsp_definitions({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>",
 	{ silent = true }
