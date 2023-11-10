@@ -71,9 +71,10 @@ require("lazy").setup({
 		end,
 	},
 
+	-- treesitter functions context
 	"nvim-treesitter/nvim-treesitter-context",
 
-	-- git
+	-- git signs
 	"lewis6991/gitsigns.nvim",
 
 	-- surround
@@ -87,9 +88,22 @@ require("lazy").setup({
 			})
 		end,
 	},
+	-- {
+	-- 	"kylechui/nvim-surround",
+	-- 	version = "*", -- Use for stability; omit to use `main` branch for the latest features
+	-- 	event = "VeryLazy",
+	-- 	config = function()
+	-- 		require("nvim-surround").setup({
+	-- 			-- Configuration here, or leave empty to use defaults
+	-- 		})
+	-- 	end,
+	-- },
 
 	-- nvim colors
 	"norcalli/nvim-colorizer.lua",
+
+	-- indent
+	{ "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
 
 	-- file explorer
 	{
@@ -98,9 +112,6 @@ require("lazy").setup({
 		-- Optional dependencies
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
-
-	-- send commands from vim to tmux terminal, example executing the current js/java file
-	"slarwise/vim-tmux-send",
 
 	-- refactoring code
 	{
@@ -126,9 +137,6 @@ require("lazy").setup({
 		"j-hui/fidget.nvim",
 		tag = "legacy",
 		event = "LspAttach",
-		opts = {
-			-- options
-		},
 	},
 
 	-- lsp
@@ -163,8 +171,6 @@ require("lazy").setup({
 								"L3MON4D3/LuaSnip",
 								dependencies = { "saadparwaiz1/cmp_luasnip", "rafamadriz/friendly-snippets" },
 							},
-							-- for icons in completion menu
-							"onsails/lspkind.nvim",
 						},
 					},
 					"hrsh7th/cmp-nvim-lsp",
@@ -175,4 +181,6 @@ require("lazy").setup({
 			},
 		},
 	},
+	-- send commands from vim to tmux terminal, example executing the current js/java file
+	-- "slarwise/vim-tmux-send",
 })
