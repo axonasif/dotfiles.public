@@ -5,6 +5,10 @@ local vnoremap = require("palani.keymap").vnoremap
 vnoremap("J", ":m '>+1<CR>gv=gv")
 vnoremap("K", ":m '<-2<CR>gv=gv")
 
+-- apped lines below with cursor staying in the same position
+nnoremap("J", "mzJ`z")
+nnoremap("Q", "<nop>")
+
 -- tmux navigator
 nnoremap("<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
@@ -16,6 +20,10 @@ nnoremap("<up>", "<nop>")
 nnoremap("<down>", "<nop>")
 nnoremap("<left>", "<nop>")
 nnoremap("<right>", "<nop>")
+
+-- quickfix list
+nnoremap("<leader>cp", "<cmd>cprev<CR>zz")
+nnoremap("<leader>cn", "<cmd>cnext<CR>zz")
 
 --window size management
 nnoremap("<C-Left>", ":vertical resize -3<CR>")
