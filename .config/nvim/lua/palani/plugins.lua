@@ -168,6 +168,11 @@ require("lazy").setup({
 			},
 		},
 	},
+	{
+		"m4xshen/hardtime.nvim",
+		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+		opts = {},
+	},
 	-- send commands from vim to tmux terminal, example executing the current js/java file
 	-- "slarwise/vim-tmux-send",
 })

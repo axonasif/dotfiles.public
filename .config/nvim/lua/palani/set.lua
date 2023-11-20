@@ -15,6 +15,8 @@ vim.opt.timeoutlen = 1000
 vim.opt.ttimeoutlen = 0
 vim.opt.synmaxcol = 200
 
+vim.opt.showmode = false
+
 vim.opt.smartindent = true
 
 -- common status lines across buffer
