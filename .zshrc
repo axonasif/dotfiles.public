@@ -27,7 +27,9 @@ eval "$(starship init zsh)"
 alias vi="nvim"
 alias vim="nvim"
 
+# config tmuxifier for automated tmux sessions startups
 eval "$(tmuxifier init -)"
+export EDITOR=nvim
 
 export FZF_DEFAULT_COMMAND="fd . $HOME/Documents/work\n"
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse-list --border'

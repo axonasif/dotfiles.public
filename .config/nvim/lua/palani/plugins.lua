@@ -37,8 +37,6 @@ require("lazy").setup({
 			require("Comment").setup()
 		end,
 	},
-
-	-- context for functions while scrolling
 	"JoosepAlviste/nvim-ts-context-commentstring",
 
 	-- AI Autocompletion
@@ -70,9 +68,6 @@ require("lazy").setup({
 			require("nvim-treesitter.install").update({ with_sync = true })
 		end,
 	},
-
-	-- treesitter functions context
-	"nvim-treesitter/nvim-treesitter-context",
 
 	-- git signs
 	"lewis6991/gitsigns.nvim",
