@@ -9,7 +9,7 @@ nnoremap("<C-e>", function()
 	require("harpoon.ui").toggle_quick_menu()
 end, silent)
 
-nnoremap("<C-n>", function()
+nnoremap("<C-b>", function()
 	require("harpoon.ui").nav_file(1)
 end, silent)
 nnoremap("<C-i>", function()

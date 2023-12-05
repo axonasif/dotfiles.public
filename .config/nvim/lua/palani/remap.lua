@@ -22,8 +22,9 @@ nnoremap("<left>", "<nop>")
 nnoremap("<right>", "<nop>")
 
 -- quickfix list
-nnoremap("<leader>cp", "<cmd>cprev<CR>zz")
-nnoremap("<leader>cn", "<cmd>cnext<CR>zz")
+vim.keymap.set("n", "<C-n>", "<cmd>:cnext<CR>")
+vim.keymap.set("n", "<C-p>", "<cmd>:cprev<CR>")
+vim.keymap.set("n", "<leader>q", "<cmd>:copen<CR>")
 
 --window size management
 nnoremap("<C-Left>", ":vertical resize -3<CR>")
@@ -36,7 +37,7 @@ nnoremap("<C-d>", "<C-d>zz")
 nnoremap("<C-u>", "<C-u>zz")
 
 -- pasting on new line
-nnoremap("<C-p>", "<cmd>pu<CR>")
+nnoremap("<leader>P", "<cmd>pu<CR>")
 
 -- copying the entire file
 nnoremap("<leader>y", "ggyG")

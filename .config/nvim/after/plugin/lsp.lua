@@ -34,23 +34,35 @@ lsp_zero.on_attach(function(client, bufnr)
 	local options = { buffer = bufnr, remap = false }
 
 	if vim.bo.filetype == "typescript" or vim.bo.filetype == "typescriptreact" then
+		nnoremap("gD", "<cmd>vsplit | TSToolsGoToSourceDefinition<CR>", options)
 		nnoremap("gd", "<cmd>TSToolsGoToSourceDefinition<CR>", options)
-	else
-		nnoremap("gd", vim.lsp.buf.definition, options)
-	end
 
-	if vim.bo.filetype == "typescript" or vim.bo.filetype == "typescriptreact" then
-		nnoremap("frn", "<cmd>TSToolsRenameFile<CR>", options)
+		-- for typescript types go to definition works best with the lsp and
+		-- function overloads
+		nnoremap("gt", vim.lsp.buf.definition, options)
+		nnoremap("gT", "<cmd>vsplit | lua vim.lsp.buf.definition()<CR>", options)
+		nnoremap("tgt", vim.lsp.buf.type_definition, options)
+		nnoremap("tgT", "<cmd>vsplit | lua vim.lsp.buf.type_definition()<CR>", options)
+
+		nnoremap("tami", "<cmd>TSToolsAddMissingImports<CR>", options)
+		nnoremap("toi", "<cmd>TSToolsOrganizeImports<CR>", options)
+		nnoremap("tsi", "<cmd>TSToolsSortImports<CR>", options)
+		nnoremap("tru", "<cmd>TSToolsRemoveUnusedImports<CR>", options)
+		nnoremap("tfa", "<cmd>TSToolsFixAll<CR>", options)
+		nnoremap("trnf", "<cmd>TSToolsRenameFile<CR>", options)
+	else
+		nnoremap("gt", vim.lsp.buf.type_definition, options)
+		nnoremap("gT", "<cmd>vsplit | lua vim.lsp.buf.type_definition()<CR>", options)
+		nnoremap("gd", vim.lsp.buf.definition, options)
+		nnoremap("gD", "<cmd>vsplit | lua vim.lsp.buf.definition()<CR>", options)
 	end
 
 	nnoremap("K", vim.lsp.buf.hover, options)
 	nnoremap("gn", vim.diagnostic.goto_next, options)
 	nnoremap("gp", vim.diagnostic.goto_prev, options)
-	nnoremap("gD", vim.lsp.buf.declaration, options)
-	nnoremap("gt", vim.lsp.buf.type_definition, options)
 	nnoremap("gi", vim.lsp.buf.implementation, options)
 	nnoremap("<leader>ca", vim.lsp.buf.code_action, options)
-	nnoremap("<leader>gr", vim.lsp.buf.references, options)
+	nnoremap("<leader>rf", vim.lsp.buf.references, options)
 	nnoremap("<leader>rn", vim.lsp.buf.rename, options)
 	nnoremap("<space>e", vim.diagnostic.open_float, options)
 	nnoremap("<space>q", vim.diagnostic.setloclist, options)
@@ -94,6 +106,11 @@ cmp.setup({
 	},
 	window = {
 		documentation = cmp.config.window.bordered(),
+	},
+	snippet = {
+		expand = function(args)
+			require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
+		end,
 	},
 	formatting = {
 		-- changing the order of fields so the icon is the first
@@ -152,7 +169,7 @@ cmp.setup({
 })
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline({ "/", "?" }, {
+cmp.setup.cmdline({ "/" }, {
 	mapping = cmp.mapping.preset.cmdline(),
 	sources = {
 		{ name = "buffer" },

@@ -54,7 +54,7 @@ require("lazy").setup({
 					auto_trigger = true,
 					debounce = 75,
 					keymap = {
-						accept = "<Tab>",
+						accept = "<M-l>",
 						accept_word = false,
 						accept_line = false,
 						next = "<M-]>",
@@ -168,25 +168,16 @@ require("lazy").setup({
 			-- LSP Support
 			{
 				"neovim/nvim-lspconfig",
-				cmd = "LspInfo",
-				event = { "BufReadPre", "BufNewFile" },
 				dependencies = {
 					-- Autocompletion
-					"saadparwaiz1/cmp_luasnip",
-					"rafamadriz/friendly-snippets",
 					{
 						"hrsh7th/nvim-cmp",
-						event = "InsertEnter",
 						dependencies = {
 							{
 								"L3MON4D3/LuaSnip",
 								dependencies = { "saadparwaiz1/cmp_luasnip", "rafamadriz/friendly-snippets" },
 							},
 						},
-					},
-					{
-						"L3MON4D3/LuaSnip",
-						dependencies = { "saadparwaiz1/cmp_luasnip", "rafamadriz/friendly-snippets" },
 					},
 					"hrsh7th/cmp-nvim-lsp",
 					"hrsh7th/cmp-nvim-lua",

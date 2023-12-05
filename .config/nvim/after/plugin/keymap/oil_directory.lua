@@ -50,4 +50,4 @@ require("oil").setup({
 	},
 })
 
-nnoremap("<leader>pv", require("oil").open, { desc = "Open parent directory" })
+nnoremap("-", require("oil").open, { desc = "Open parent directory" })

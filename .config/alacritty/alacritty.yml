@@ -8,6 +8,8 @@ window:
   dimensions:
    columns: 180
    lines: 100
+  dynamic_padding: false
+  decorations: buttonless
 
 font:
   normal:
@@ -16,11 +18,12 @@ font:
   size: 15.0
 
 key_bindings:
- - { key: C, mods: Command, chars: "\x01\x63" }
- - { key: R, mods: Command, chars: "\x01\x72" }
- - { key: Minus, mods: Command|Shift, chars: "\x01\x2d"}
- - { key: Backslash, mods: Command, chars: "\x01\x7c" }
- - { key: G, mods: Command, chars: "\x01\x07"} # lazygit
+ - { key: C, mods: Command, chars: "\x01\x63" } # create new window in tmux inside current session
+ - { key: R, mods: Command, chars: "\x01\x72" } # reload tmux config
+ - { key: Minus, mods: Command|Shift, chars: "\x01\x2d"} # create horizontal split tmux pane
+ - { key: Backslash, mods: Command, chars: "\x01\x7c" } # create vertical split tmux pane
+ - { key: LBracket, mods: Command, chars: "\x01\x5b" } # entering vim copy mode in terminal inside tmux
+ - { key: G, mods: Command, chars: "\x01\x07"} # lazygit in tmux
  - { key: M, mods: Command, chars: "\x01\x6d"} # for maximizing current tmux pane
  - { key: F, mods: Command, chars: "\x01\x06"} # for glancing at all active tmux sessions
  - { key: D, mods: Command, chars: "\x01\x64"} # detach from current tmux session
@@ -37,9 +40,9 @@ key_bindings:
  - { key: Key7, mods: Command, chars: "\x017" } #                ... 7
  - { key: Key8, mods: Command, chars: "\x018" } #                ... 8
  - { key: Key9, mods: Command, chars: "\x019" } #                ... 9
- - { key: W, mods: Command, chars: "\x01\x77" } # kill the current pane
+ - { key: X, mods: Command, chars: "\x01\x77" } # kill the current tmux pane
 
-# Start tmux session by default on opening alacritty if a sessin exists
+# Start tmux session by default on opening alacritty if a session exists
 shell:
   program: /bin/zsh
   args:

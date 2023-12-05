@@ -3,10 +3,6 @@ export ZSH="$HOME/.oh-my-zsh"
 
 . $HOME/.asdf/asdf.sh
 
-# tmux-sessionizer
-bindkey -s ^f "tmux-sessionizer\n"
-bindkey -s ^v "vi .\n"
-
 #oh-my-zsh plugins
 plugins=(
 	zsh-autosuggestions          #for autocompletion suggestion from history
@@ -15,6 +11,10 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+
+# tmux-sessionizer
+bindkey -s ^f "tmux-sessionizer\n"
+bindkey -s ^v "vi .\n"
 
 # history-substring-search options
 bindkey "$terminfo[kcuu1]" history-substring-search-up

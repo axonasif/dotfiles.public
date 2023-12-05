@@ -13,7 +13,7 @@ conform.setup({
 		sh = { "shfmt" },
 		zsh = { "shfmt" },
 	},
-	-- timeout_ms = 10000,
+	timeout_ms = 10000,
 	format_on_save = {
 		lsp_fallback = true,
 		async = false,
