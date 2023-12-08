@@ -53,10 +53,10 @@ nnoremap("<leader>g", ":lua _G.live_grep_cwd()<CR>", { silent = true })
 nnoremap("<leader>u", "<cmd>lua require('fzf-lua').resume()<CR>", { silent = true })
 
 _G.live_grep_cwd = function()
-	require("fzf-lua").fzf_exec("fd --type d", {
+	require("fzf-lua").fzf_exec("fd --type d -H --exclude=.git", {
 		actions = {
 			["default"] = function(sel, opts)
-				require("fzf-lua").live_grep({ cwd = sel[1] })
+				require("fzf-lua").live_grep({ cwd = sel[1], fzf_opts = { ["--layout"] = "reverse-list" } })
 			end,
 		},
 	})
