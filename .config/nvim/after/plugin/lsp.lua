@@ -7,6 +7,7 @@ local luasnip = require("luasnip")
 local nnoremap = require("palani.keymap").nnoremap
 local conform = require("conform")
 
+-- TODO: Add lazy loading to plugins
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 mason.setup({})
 mason_lspconfig.setup({
