@@ -52,3 +52,11 @@ nnoremap("<leader>O", "moO<Esc>`o")
 --navigating while searching
 nnoremap("n", "nzzzv")
 nnoremap("N", "Nzzzv")
+
+-- move to next and previous buffers
+vim.keymap.set("n", "[b", "<cmd>bprevious<cr>", {
+	desc = "Prev buffer",
+})
+vim.keymap.set("n", "]b", "<cmd>bnext<cr>", {
+	desc = "Next buffer",
+})

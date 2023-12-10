@@ -88,14 +88,96 @@ require("lazy").setup({
 	{
 		"nvim-treesitter/nvim-treesitter",
 		event = { "BufWritePre", "BufNewFile" },
+		dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
 		build = function()
 			require("nvim-treesitter.install").update({ with_sync = true })
 		end,
 	},
 
-	-- git signs
-	"lewis6991/gitsigns.nvim",
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		lazy = true,
+		config = function()
+			require("nvim-treesitter.configs").setup({
+				textobjects = {
+					move = {
+						enable = true,
+						goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer" },
+						goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer" },
+						goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer" },
+						goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer" },
+					},
 
+					select = {
+						enable = true,
+
+						-- Automatically jump forward to textobj, similar to targets.vim
+						lookahead = true,
+						keymaps = {
+							["ac"] = { query = "@call.outer", desc = "Select outer part of a function call" },
+							["ic"] = { query = "@call.inner", desc = "Select inner part of a function call" },
+
+							["af"] = {
+								query = "@function.outer",
+								desc = "Select outer part of a method/function definition",
+							},
+							["if"] = {
+								query = "@function.inner",
+								desc = "Select inner part of a method/function definition",
+							},
+						},
+					},
+				},
+			})
+		end,
+	},
+
+	-- TODO: comments
+	{
+		"folke/todo-comments.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		event = "VeryLazy",
+		opts = {
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
+		},
+		keys = {
+			{
+				"]t",
+				function()
+					require("todo-comments").jump_next()
+				end,
+				desc = "Next todo comment",
+			},
+			{
+				"[t",
+				function()
+					require("todo-comments").jump_prev()
+				end,
+				desc = "Previous todo comment",
+			},
+		},
+	},
+
+	-- git signs
+	{
+		"lewis6991/gitsigns.nvim",
+		event = "BufReadPre",
+		opts = function()
+			local C = {
+				on_attach = function(buffer)
+					local gs = package.loaded.gitsigns
+					local function map(mode, l, r, desc)
+						vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
+					end
+					map("n", "]g", gs.next_hunk, "Next Hunk")
+					map("n", "[g", gs.prev_hunk, "Prev Hunk")
+				end,
+			}
+			return C
+		end,
+	},
 	-- surround
 	{
 		"kylechui/nvim-surround",
@@ -129,7 +211,13 @@ require("lazy").setup({
 	},
 
 	-- harpooooon for quick file switching
-	{ "ThePrimeagen/harpoon", event = "VeryLazy" },
+	-- { "ThePrimeagen/harpoon", event = "VeryLazy" },
+	{
+		"ThePrimeagen/harpoon",
+		branch = "harpoon2",
+		requires = { { "nvim-lua/plenary.nvim" } },
+		event = "VeryLazy",
+	},
 
 	-- better ts tools
 	{

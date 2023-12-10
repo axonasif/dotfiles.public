@@ -58,11 +58,23 @@ lsp_zero.on_attach(function(client, bufnr)
 	end
 
 	nnoremap("K", vim.lsp.buf.hover, options)
-	nnoremap("gn", vim.diagnostic.goto_next, options)
-	nnoremap("gp", vim.diagnostic.goto_prev, options)
+
+	local diagnostic_goto = function(next, severity)
+		local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
+		severity = severity and vim.diagnostic.severity[severity] or nil
+		return function()
+			go({ severity = severity })
+		end
+	end
+	nnoremap("]d", diagnostic_goto(true), { desc = "Next Diagnostic" })
+	nnoremap("[d", diagnostic_goto(false), { desc = "Prev Diagnostic" })
+	nnoremap("]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
+	nnoremap("[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
+	nnoremap("]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
+	nnoremap("[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
+
 	nnoremap("gi", vim.lsp.buf.implementation, options)
 	nnoremap("<leader>ca", vim.lsp.buf.code_action, options)
-	nnoremap("<leader>rf", vim.lsp.buf.references, options)
 	nnoremap("<leader>rn", vim.lsp.buf.rename, options)
 	nnoremap("<space>e", vim.diagnostic.open_float, options)
 	nnoremap("<space>q", vim.diagnostic.setloclist, options)
