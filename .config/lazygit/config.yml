@@ -26,3 +26,10 @@ gui:
       - "#89b4fa" # Blue
     unstagedChangesColor:
       - red # Red
+
+
+customCommands:
+  - key: "<c-r>"
+    command: "gh pr create --fill --web"
+    context: "global"
+    loadingText: "Creating pull request on GitHub"
