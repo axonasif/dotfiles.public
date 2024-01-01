@@ -1,7 +1,5 @@
 local nnoremap = require("palani.keymap").nnoremap
 
-local silent = { silent = true }
-
 local harpoon = require("harpoon")
 
 harpoon:setup()

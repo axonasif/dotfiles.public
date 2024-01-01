@@ -1,5 +1,6 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 local uv = vim.uv or vim.loop
+local nnoremap = require("palani.keymap").nnoremap
 
 -- Auto-install lazy.nvim if not present
 if not uv.fs_stat(lazypath) then
@@ -28,16 +29,15 @@ require("lazy").setup({
 	"ibhagwan/fzf-lua",
 
 	-- window navigation
-	"christoomey/vim-tmux-navigator",
-
-	-- for better quick fix list
-	{ "kevinhwang91/nvim-bqf" },
+	{ "christoomey/vim-tmux-navigator", event = "VeryLazy" },
 
 	-- GIT STUFF --
 	-- git signs
 	{
 		"lewis6991/gitsigns.nvim",
-		event = "BufReadPre",
+		-- ft = filetypes,
+		event = { "BufReadPre", "BufNewFile" },
+		config = true,
 		opts = function()
 			local C = {
 				on_attach = function(buffer)
@@ -53,23 +53,79 @@ require("lazy").setup({
 		end,
 	},
 
+	-- git links on the fly
+	{
+		"linrongbin16/gitlinker.nvim",
+		cmd = { "GitLink" },
+		config = function()
+			require("gitlinker").setup()
+		end,
+	},
+
 	-- diff view for git
-	{ "sindrets/diffview.nvim" },
+	{ "sindrets/diffview.nvim", cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewFileHistory" } },
 
 	-- git blame
 	{
 		"FabijanZulj/blame.nvim",
+		cmd = "ToggleBlame",
 	},
 
 	-- comments in nvim
 	{
 		"numToStr/Comment.nvim",
-		opts = {
-			-- add any options here
+		config = function()
+			require("Comment").setup({
+				pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+			})
+
+			require("ts_context_commentstring").setup({
+				enable_autocmd = false,
+			})
+
+			vim.g.skip_ts_context_commentstring_module = true
+		end,
+		keys = {
+			{
+				"gcc",
+				mode = { "n" },
+				function()
+					require("Comment").toggle()
+				end,
+				desc = "Comment",
+			},
+			{
+				"gc",
+				mode = { "v" },
+				function()
+					require("Comment").toggle()
+				end,
+				desc = "Comment",
+			},
 		},
-		event = "VeryLazy",
 	},
-	"JoosepAlviste/nvim-ts-context-commentstring",
+
+	{
+		"JoosepAlviste/nvim-ts-context-commentstring",
+		keys = {
+			{
+				"gcc",
+				mode = { "n" },
+				function()
+					require("Comment").toggle()
+				end,
+				desc = "Comment",
+			},
+			{
+				"gc",
+				mode = { "v" },
+				function()
+					require("Comment").toggle()
+				end,
+				desc = "Comment",
+			},
+		},
+	},
 
 	-- AI Autocompletion
 	{
@@ -98,31 +154,139 @@ require("lazy").setup({
 	-- color theme
 	{
 		"catppuccin/nvim",
+		priority = 1000,
 		name = "catppuccin",
+		lazy = false,
+		config = function()
+			require("catppuccin").setup({
+				highlight_overrides = {
+					mocha = function(mocha)
+						return {
+							LineNr = { fg = mocha.overlay1 },
+						}
+					end,
+				},
+			})
+			vim.cmd.colorscheme("catppuccin-mocha")
+		end,
 	},
 
 	-- formatter
 	{
 		"stevearc/conform.nvim",
-		event = { "BufWritePre", "BufNewFile" },
+		event = { "BufWritePre" },
+		cmd = { "ConformInfo" },
+		keys = {
+			{
+				-- Customize or remove this keymap to your liking
+				"<leader>i",
+				function()
+					require("conform").format({
+						lsp_fallback = true,
+						async = false,
+						timeout_ms = 10000,
+					})
+				end,
+				mode = "",
+				desc = "Format buffer",
+			},
+		},
+		opts = {
+			formatters_by_ft = {
+				go = { "gofumpt", "goimports", "golines" },
+				rust = { "rustfmt" },
+				css = { "prettierd" },
+				javascript = { "prettierd" },
+				javascriptreact = { "prettierd" },
+				typescript = { "prettierd" },
+				typescriptreact = { "prettierd" },
+				lua = { "stylua" },
+				sh = { "shfmt" },
+				zsh = { "shfmt" },
+			},
+			timeout_ms = 10000,
+			format_on_save = {
+				lsp_fallback = true,
+				async = false,
+				timeout_ms = 10000,
+			},
+		},
 	},
 
 	-- linter
 	{
 		"mfussenegger/nvim-lint",
-		event = { "BufWritePre", "BufNewFile" },
+		-- ft = filetypes,
+		event = { "BufReadPre", "BufWritePre", "BufNewFile" },
+		config = function()
+			local lint = require("lint")
+
+			lint.linters_by_ft = {
+				css = { "eslint_d" },
+				javascript = { "eslint_d" },
+				javascriptreact = { "eslint_d" },
+				typescript = { "eslint_d" },
+				typescriptreact = { "eslint_d" },
+				markdown = { "markdownlint" },
+			}
+
+			vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile", "BufWritePost" }, {
+				callback = function()
+					lint.try_lint()
+				end,
+			})
+
+			nnoremap("<leader>l", function()
+				lint.try_lint()
+			end, { silent = true, desc = "Trigger linting for current buffer" })
+		end,
 	},
 
 	-- treesitter syntax highlighting
 	{
 		"nvim-treesitter/nvim-treesitter",
-		event = { "BufWritePre", "BufNewFile" },
-		dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
+		-- event = { "BufNewFile" },
+		event = { "BufReadPre", "BufNewFile" },
+		-- ft = filetypes,
+		dependencies = { "nvim-treesitter/nvim-treesitter-textobjects", "chrisgrieser/nvim-various-textobjs" },
 		build = function()
 			require("nvim-treesitter.install").update({ with_sync = true })
 		end,
+		config = function()
+			require("nvim-treesitter.configs").setup({
+				sync_install = true,
+				auto_install = true,
+				ignore_install = { "" },
+				highlight = {
+					enable = true,
+					additional_vim_regex_highlighting = false,
+				},
+				indent = { enable = true },
+			})
+		end,
 	},
+	{
+		"chrisgrieser/nvim-various-textobjs",
+		lazy = true,
+		config = function()
+			require("various-textobjs").setup({
+				-- lines to seek forwards for "small" textobjs (mostly characterwise textobjs)
+				-- set to 0 to only look in the current line
+				lookForwardSmall = 5,
 
+				-- lines to seek forwards for "big" textobjs (mostly linewise textobjs)
+				lookForwardBig = 15,
+
+				-- use suggested keymaps (see overview table in README)
+				useDefaultKeymaps = false,
+
+				-- disable only some default keymaps, e.g. { "ai", "ii" }
+				disabledKeymaps = {},
+			})
+			local keymap = vim.keymap.set
+			keymap({ "o", "x" }, "mc", "<cmd>lua require('various-textobjs').multiCommentedLines()<CR>")
+		end,
+	},
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		lazy = true,
@@ -131,10 +295,26 @@ require("lazy").setup({
 				textobjects = {
 					move = {
 						enable = true,
-						goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer" },
-						goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer" },
-						goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer" },
-						goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer" },
+						goto_next_start = {
+							["]f"] = "@function.outer",
+							["]c"] = "@call.outer",
+							["]s"] = "@class.outer",
+						},
+						goto_next_end = {
+							["]F"] = "@function.outer",
+							["]C"] = "@call.outer",
+							["]S"] = "@class.outer",
+						},
+						goto_previous_start = {
+							["[f"] = "@function.outer",
+							["[c"] = "@call.outer",
+							["[s"] = "@class.outer",
+						},
+						goto_previous_end = {
+							["[F"] = "@function.outer",
+							["[C"] = "@call.outer",
+							["[S"] = "@class.outer",
+						},
 					},
 
 					select = {
@@ -143,8 +323,14 @@ require("lazy").setup({
 						-- Automatically jump forward to textobj, similar to targets.vim
 						lookahead = true,
 						keymaps = {
-							["ac"] = { query = "@call.outer", desc = "Select outer part of a function call" },
-							["ic"] = { query = "@call.inner", desc = "Select inner part of a function call" },
+							["ac"] = {
+								query = "@call.outer",
+								desc = "Select outer part of a function call",
+							},
+							["ic"] = {
+								query = "@call.inner",
+								desc = "Select inner part of a function call",
+							},
 
 							["af"] = {
 								query = "@function.outer",
@@ -154,6 +340,15 @@ require("lazy").setup({
 								query = "@function.inner",
 								desc = "Select inner part of a method/function definition",
 							},
+
+							["as"] = {
+								query = "@class.outer",
+								desc = "Select outer part of a class/struct",
+							},
+							["is"] = {
+								query = "@class.inner",
+								desc = "Select inner part of a class/struct",
+							},
 						},
 					},
 				},
@@ -161,53 +356,62 @@ require("lazy").setup({
 		end,
 	},
 
-	-- TODO: comments
-	{
-		"folke/todo-comments.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		event = "VeryLazy",
-		opts = {
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
-		},
-		keys = {
-			{
-				"]t",
-				function()
-					require("todo-comments").jump_next()
-				end,
-				desc = "Next todo comment",
-			},
-			{
-				"[t",
-				function()
-					require("todo-comments").jump_prev()
-				end,
-				desc = "Previous todo comment",
-			},
-		},
-	},
-
-	-- surround
 	{
 		"kylechui/nvim-surround",
 		version = "*", -- Use for stability; omit to use `main` branch for the latest features
-		event = "VeryLazy",
 		config = function()
-			require("nvim-surround").setup({
-				-- Configuration here, or leave empty to use defaults
-			})
+			require("nvim-surround").setup({})
 		end,
+		keys = { "cs", "ds", "ys" },
 	},
 
-	-- nvim colors
-	{ "norcalli/nvim-colorizer.lua" },
+	-- nvim fncolors
+	{ "norcalli/nvim-colorizer.lua", ft = { "css", "javascriptreact", "typescriptreact", "html" } },
 
 	-- file explorer
 	{
 		"stevearc/oil.nvim",
 		opts = {},
+		keys = {
+			{
+				"-",
+				mode = { "n" },
+				function()
+					require("oil").open()
+				end,
+				desc = "Open parent directory",
+			},
+		},
+		config = function()
+			require("oil").setup({
+				use_default_keymaps = false,
+				keymaps = {
+					["<CR>"] = "actions.select",
+				},
+				view_options = {
+					show_hidden = true,
+					is_hidden_file = function(name, bufnr)
+						return vim.startswith(name, ".")
+					end,
+					is_always_hidden = function(name, bufnr)
+						return false
+					end,
+				},
+				-- Configuration for the floating window in oil.open_float
+				float = {
+					-- Padding around the floating window
+					padding = 2,
+					max_width = 0,
+					max_height = 0,
+					border = "rounded",
+					win_options = {
+						winblend = 10,
+					},
+				},
+			})
+
+			nnoremap("-", require("oil").open, { desc = "Open parent directory" })
+		end,
 		-- Optional dependencies
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
@@ -215,6 +419,16 @@ require("lazy").setup({
 	-- refactoring code
 	{
 		"ThePrimeagen/refactoring.nvim",
+		keys = {
+			{
+				"<leader>rv",
+				mode = { "n" },
+				function()
+					require("refactoring").debug.print_var({ normal = true })
+				end,
+				desc = "Comment",
+			},
+		},
 		dependencies = {
 			{ "nvim-lua/plenary.nvim" },
 			{ "nvim-treesitter/nvim-treesitter" },
@@ -222,7 +436,6 @@ require("lazy").setup({
 	},
 
 	-- harpooooon for quick file switching
-	-- { "ThePrimeagen/harpoon", event = "VeryLazy" },
 	{
 		"ThePrimeagen/harpoon",
 		branch = "harpoon2",
@@ -242,6 +455,7 @@ require("lazy").setup({
 		"j-hui/fidget.nvim",
 		tag = "legacy",
 		event = "LspAttach",
+		config = true,
 	},
 
 	-- lsp
@@ -295,6 +509,77 @@ require("lazy").setup({
 			},
 		},
 	},
-	-- send commands from vim to tmux terminal, example executing the current js/java file
-	-- "slarwise/vim-tmux-send",
+	-- for better quick fix list
+	{
+		"kevinhwang91/nvim-bqf",
+		event = "VeryLazy",
+	},
+
+	-- for live diagnostics population in quickfix list
+	{
+		"onsails/diaglist.nvim",
+		keys = {
+			{
+				"<leader>d0",
+				mode = { "n" },
+				function()
+					require("diaglist").open_buffer_diagnostics()
+				end,
+				desc = "Open buffer diagnostic list",
+			},
+			{
+				"<leader>dw",
+				mode = { "n" },
+				function()
+					require("diaglist").open_all_diagnostics()
+				end,
+				desc = "Open all diagnostic list",
+			},
+		},
+		config = function()
+			require("diaglist").init({
+				debug = false,
+				debounce_ms = 150,
+			})
+		end,
+	},
+
+	-- rust stuff
+	{
+		"simrat39/rust-tools.nvim",
+		ft = "rust",
+		requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+		config = function()
+			local rust_tools = require("rust-tools")
+
+			rust_tools.setup({
+				tools = {
+					hover_actions = {
+						auto_focus = true,
+					},
+				},
+
+				server = {
+					on_attach = function(client, bufnr)
+						vim.keymap.set("n", "<leader>cha", rust_tools.hover_actions.hover_actions, { buffer = bufnr })
+						vim.keymap.set("n", "<leader>cr", rust_tools.runnables.runnables, { buffer = bufnr })
+						vim.keymap.set(
+							"n",
+							"<leader>cc",
+							rust_tools.open_cargo_toml.open_cargo_toml,
+							{ buffer = bufnr }
+						)
+					end,
+				},
+			})
+		end,
+	},
+	{
+		"gen740/SmoothCursor.nvim",
+		config = true,
+		opts = {
+			cursor = "👉",
+		},
+		cmd = { "SmoothCursorStart", "SmoothCursorToggle" },
+	},
 })

@@ -61,10 +61,7 @@ nnoremap(
 	{ silent = true }
 )
 
-nnoremap("<leader>g", ":lua _G.live_grep_cwd()<CR>", { silent = true })
-nnoremap("<leader>u", "<cmd>lua require('fzf-lua').resume()<CR>", { silent = true })
-
-_G.live_grep_cwd = function()
+local live_grep_cwd = function()
 	require("fzf-lua").fzf_exec("fd --type d -H --exclude=.git", {
 		actions = {
 			["default"] = function(sel, opts)
@@ -73,3 +70,6 @@ _G.live_grep_cwd = function()
 		},
 	})
 end
+
+nnoremap("<leader>g", live_grep_cwd, { silent = true })
+nnoremap("<leader>u", "<cmd>lua require('fzf-lua').resume()<CR>", { silent = true })
